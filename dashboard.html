@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de uso — Bizcochuela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Login ── */
+  #loginScreen { position: fixed; inset: 0; z-index: 100; background: #0B0E0B; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .login-card { background: #161C16; border: 1px solid rgba(100,200,100,0.12); border-radius: 24px; padding: 40px 32px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 12px 48px rgba(0,0,0,0.5); }
+  .login-badge { width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg,#2E7D32,#66BB6A); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; box-shadow: 0 4px 20px rgba(46,125,50,0.4); }
+  .login-title { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 800; color: #E8F5E9; margin-bottom: 6px; }
+  .login-sub { font-size: 12px; color: rgba(200,230,200,0.4); margin-bottom: 28px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .login-input { width: 100%; padding: 13px 16px; background: #0B0E0B; border: 1.5px solid rgba(100,200,100,0.2); border-radius: 12px; font-size: 15px; font-family: 'DM Sans', sans-serif; color: #E8F5E9; text-align: center; text-transform: uppercase; letter-spacing: 2px; outline: none; transition: border-color 0.2s; margin-bottom: 8px; }
+  .login-input:focus { border-color: #66BB6A; }
+  .login-input::placeholder { color: rgba(200,230,200,0.25); letter-spacing: 0; text-transform: none; }
+  .login-err { font-size: 12px; color: #FCA5A5; min-height: 18px; margin-bottom: 12px; }
+  .login-btn { width: 100%; padding: 13px; background: linear-gradient(135deg,#2E7D32,#388E3C); color: #E8F5E9; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: opacity 0.15s; position: relative; }
+  .login-btn:hover { opacity: 0.88; }
+  .login-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .login-btn.loading { color: transparent; }
+  .login-btn.loading::after { content:''; position:absolute; inset:0; margin:auto; width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); border-top-color:#E8F5E9; animation:dspin 0.6s linear infinite; }
+
+  /* ── Dashboard ── */
+  body { background: #0B0E0B; color: #E8F5E9; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; }
+  #dashboardPage { display: none; position: relative; z-index: 1; }
+  .d-wrap { max-width: 1100px; margin: 0 auto; padding: 36px 24px 80px; }
+
+  .d-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; gap: 16px; flex-wrap: wrap; }
+  .d-logo { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  .d-logo-badge { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg,#2E7D32,#66BB6A); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 20px rgba(46,125,50,0.4); flex-shrink: 0; }
+  .d-logo h1 { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
+  .d-logo p { font-size: 11px; color: rgba(200,230,200,0.35); margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .d-top-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .d-last { font-size: 11px; color: rgba(200,230,200,0.35); white-space: nowrap; }
+  .d-btn { padding: 7px 14px; border-radius: 10px; font-size: 12px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 500; }
+  .d-btn-refresh { background: #161C16; border: 1px solid rgba(100,200,100,0.18); color: rgba(200,230,200,0.55); display: flex; align-items: center; gap: 6px; }
+  .d-btn-refresh:hover { border-color: #66BB6A; color: #A5D6A7; }
+  .d-btn-refresh.loading .d-ri { display: inline-block; animation: dspin 0.8s linear infinite; }
+  @keyframes dspin { to { transform: rotate(360deg); } }
+  /* FIX: botón CSV */
+  .d-btn-csv { background: rgba(46,125,50,0.15); border: 1px solid rgba(46,125,50,0.3); color: #A5D6A7; display: flex; align-items: center; gap: 5px; }
+  .d-btn-csv:hover { background: rgba(46,125,50,0.25); border-color: #66BB6A; }
+  .d-btn-csv:disabled { opacity: 0.3; cursor: not-allowed; }
+  .d-btn-exit { background: transparent; border: 1px solid rgba(100,200,100,0.10); color: rgba(200,230,200,0.35); }
+  .d-btn-exit:hover { border-color: #B91C1C; color: #FCA5A5; }
+
+  .d-err { background: rgba(185,28,28,0.12); border: 1px solid rgba(185,28,28,0.3); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #FCA5A5; margin-bottom: 20px; display: none; }
+  .d-err.show { display: block; }
+
+  /* KPIs */
+  .d-kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+  .d-kpi { background: #131813; border: 1px solid rgba(100,200,100,0.10); border-radius: 18px; padding: 22px 20px; position: relative; overflow: hidden; }
+  .d-kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--da,#2E7D32); }
+  .d-kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(200,230,200,0.35); margin-bottom: 8px; }
+  .d-kpi-val { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+  .d-kpi-sub { font-size: 11px; color: rgba(200,230,200,0.35); }
+  .d-kpi-icon { position: absolute; top: 16px; right: 16px; font-size: 20px; opacity: 0.18; }
+
+  /* Cards */
+  .d-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .d-card { background: #131813; border: 1px solid rgba(100,200,100,0.10); border-radius: 18px; padding: 22px; }
+  .d-card-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(200,230,200,0.35); margin-bottom: 18px; }
+
+  /* Barras */
+  .d-bar-list { display: flex; flex-direction: column; gap: 9px; }
+  .d-bar-row { display: flex; align-items: center; gap: 9px; }
+  .d-bar-lbl { font-size: 11px; color: rgba(200,230,200,0.55); width: 90px; min-width: 0; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .d-bar-track { flex: 1; height: 7px; background: #1A231A; border-radius: 4px; overflow: hidden; min-width: 0; }
+  .d-bar-fill { height: 100%; border-radius: 4px; transition: width 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .d-bar-n { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(200,230,200,0.35); min-width: 20px; text-align: right; }
+
+  /* Donut */
+  .d-donut-wrap { display: flex; align-items: center; gap: 20px; }
+  .d-donut-wrap svg { flex-shrink: 0; }
+  .d-legend { display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; }
+  .d-legend-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(200,230,200,0.55); }
+  .d-legend-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+  .d-legend-val { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(200,230,200,0.35); margin-left: auto; padding-left: 6px; white-space: nowrap; }
+
+  /* Estrellas */
+  .d-stars { display: flex; flex-direction: column; gap: 7px; }
+  .d-star-row { display: flex; align-items: center; gap: 8px; }
+  .d-star-lbl { font-size: 11px; min-width: 52px; }
+  .d-star-lbl.sat { color: #A5D6A7; } .d-star-lbl.fac { color: #80DEEA; }
+  .d-star-track { flex: 1; height: 7px; background: #1A231A; border-radius: 4px; overflow: hidden; }
+  .d-star-fill-sat { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#2E7D32,#66BB6A); transition: width 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .d-star-fill-fac { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#0097A7,#80DEEA); transition: width 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .d-star-pct { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(200,230,200,0.35); min-width: 30px; text-align: right; }
+
+  /* Timeline */
+  .d-tl-bars { display: flex; align-items: flex-end; gap: 3px; height: 72px; }
+  .d-tl-bar { flex: 1; background: #2E7D32; border-radius: 3px 3px 0 0; min-height: 3px; transition: height 0.5s cubic-bezier(0.16,1,0.3,1); }
+  .d-tl-bar:hover { opacity: 1 !important; filter: brightness(1.3); }
+  .d-tl-labels { display: flex; gap: 3px; margin-top: 5px; }
+  .d-tl-lbl { flex: 1; font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(200,230,200,0.3); text-align: center; overflow: hidden; }
+
+  /* Tabla */
+  .d-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .d-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .d-table thead th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(200,230,200,0.35); padding: 7px 10px; text-align: left; border-bottom: 1px solid rgba(100,200,100,0.10); white-space: nowrap; }
+  .d-table tbody td { padding: 9px 10px; border-bottom: 1px solid rgba(100,200,100,0.07); color: rgba(200,230,200,0.55); }
+  .d-table tbody tr:last-child td { border-bottom: none; }
+  .d-table tbody tr:hover td { background: #1A231A; }
+  .d-pill { display: inline-block; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+  .d-pill-g { background: rgba(46,125,50,0.15); color: #A5D6A7; border: 1px solid rgba(46,125,50,0.25); }
+  .d-pill-a { background: rgba(232,168,48,0.15); color: #FFD54F; border: 1px solid rgba(232,168,48,0.25); }
+  .d-pill-r { background: rgba(185,28,28,0.15); color: #FCA5A5; border: 1px solid rgba(185,28,28,0.25); }
+  .d-stars-cell { color: #FFD54F; letter-spacing: -1px; }
+  .d-empty { text-align: center; padding: 32px 16px; }
+  .d-empty-icon { font-size: 30px; margin-bottom: 8px; opacity: 0.3; }
+  .d-empty-text { font-size: 11px; color: rgba(200,230,200,0.35); }
+
+  @media (max-width: 900px) {
+    .d-kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .d-last { display: none; }
+  }
+  @media (max-width: 640px) {
+    .d-wrap { padding: 16px 12px 60px; }
+    .d-top { margin-bottom: 24px; }
+    .d-logo p { display: none; }
+    .d-kpi-grid { gap: 10px; margin-bottom: 16px; }
+    .d-kpi { padding: 16px 14px; border-radius: 14px; }
+    .d-kpi-val { font-size: 1.75rem; }
+    .d-row2 { grid-template-columns: 1fr; gap: 10px; }
+    .d-card { padding: 16px 14px; border-radius: 14px; }
+    .d-col-hora, .d-col-muni { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-badge">🐾</div>
+    <div class="login-title">Panel de uso</div>
+    <div class="login-sub">Bizcochuela · Aula Clara</div>
+    <input id="pinInput" class="login-input" type="password"
+      placeholder="Código de acceso" maxlength="30"
+      autocomplete="off" spellcheck="false"
+      onkeydown="if(event.key==='Enter') doLogin()">
+    <div class="login-err" id="loginErr"></div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Ingresar</button>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboardPage">
+  <div class="d-wrap">
+    <div class="d-top">
+      <div class="d-logo">
+        <div class="d-logo-badge">🐾</div>
+        <div>
+          <h1>Panel de uso · Bizcochuela</h1>
+          <p>Aula Clara — Municipio</p>
+        </div>
+      </div>
+      <div class="d-top-right">
+        <span class="d-last" id="dLastUpdate">Cargando…</span>
+        <!-- FIX: exportar CSV -->
+        <button class="d-btn d-btn-csv" id="dCsvBtn" onclick="exportCSV()" disabled title="Descargar datos en Excel">
+          ↓ CSV
+        </button>
+        <button class="d-btn d-btn-refresh" id="dRefreshBtn" onclick="dLoadData()">
+          <span class="d-ri">↺</span> Actualizar
+        </button>
+        <button class="d-btn d-btn-exit" onclick="dExit()">Salir</button>
+      </div>
+    </div>
+
+    <div class="d-err" id="dErrBox"></div>
+
+    <div class="d-kpi-grid">
+      <div class="d-kpi" style="--da:#2E7D32">
+        <div class="d-kpi-icon">📋</div>
+        <div class="d-kpi-label">Encuestas completadas</div>
+        <div class="d-kpi-val" id="dKpiTotal">—</div>
+        <div class="d-kpi-sub" id="dKpiTotalSub">Sin datos</div>
+      </div>
+      <div class="d-kpi" style="--da:#66BB6A">
+        <div class="d-kpi-icon">⭐</div>
+        <div class="d-kpi-label">Satisfacción promedio</div>
+        <div class="d-kpi-val" id="dKpiSat">—</div>
+        <div class="d-kpi-sub" id="dKpiSatSub">Escala 1–5</div>
+      </div>
+      <div class="d-kpi" style="--da:#0097A7">
+        <div class="d-kpi-icon">🖱️</div>
+        <div class="d-kpi-label">Facilidad de uso prom.</div>
+        <div class="d-kpi-val" id="dKpiFac">—</div>
+        <div class="d-kpi-sub" id="dKpiFacSub">Escala 1–5</div>
+      </div>
+      <!-- FIX #10: KPI "resolvió algo" = Sí + Más o menos -->
+      <div class="d-kpi" style="--da:#A5D6A7">
+        <div class="d-kpi-icon">✅</div>
+        <div class="d-kpi-label">Resolvió su consulta</div>
+        <div class="d-kpi-val" id="dKpiEncontro">—</div>
+        <div class="d-kpi-sub" id="dKpiEncontroSub">"Sí" o "Más o menos"</div>
+      </div>
+    </div>
+
+    <div class="d-row2">
+      <div class="d-card">
+        <div class="d-card-title">Satisfacción y facilidad por estrella</div>
+        <div class="d-stars" id="dStars">
+          <div class="d-empty"><div class="d-empty-icon">⭐</div><div class="d-empty-text">Sin datos</div></div>
+        </div>
+      </div>
+      <div class="d-card">
+        <div class="d-card-title">¿Encontraron lo que buscaban?</div>
+        <div class="d-donut-wrap" id="dEncontro">
+          <div class="d-empty"><div class="d-empty-icon">🍩</div><div class="d-empty-text">Sin datos</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-row2">
+      <div class="d-card">
+        <div class="d-card-title">Consultas más frecuentes</div>
+        <div class="d-bar-list" id="dChips">
+          <div class="d-empty"><div class="d-empty-icon">📊</div><div class="d-empty-text">Sin datos</div></div>
+        </div>
+      </div>
+      <div class="d-card">
+        <div class="d-card-title">Actividad últimos 14 días</div>
+        <div class="d-tl-bars" id="dTlBars"></div>
+        <div class="d-tl-labels" id="dTlLabels"></div>
+      </div>
+    </div>
+
+    <div class="d-card" style="margin-top:14px;">
+      <div class="d-card-title">Últimas 30 respuestas</div>
+      <div class="d-table-wrap">
+        <table class="d-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th class="d-col-hora">Hora</th>
+              <th class="d-col-muni">Municipio</th>
+              <th>Consulta</th>
+              <th>Satisf.</th>
+              <th>Facilidad</th>
+              <th>¿Encontró?</th>
+            </tr>
+          </thead>
+          <tbody id="dTableBody">
+            <tr><td colspan="7" style="text-align:center;padding:28px;color:rgba(200,230,200,0.3)">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const WORKER_URL = 'https://bizcochuela-familias.abfacundotorres.workers.dev';
+// Columnas AppScript (0-based):
+// 0:fecha|1:hora|2:municipio|3:chip|4:satisfaccion|5:facilidad|6:encontro|7:session_id|8:fecha_iso
+
+let dashPin  = '';
+let allRows  = []; // cache para exportar CSV
+
+const $ = id => document.getElementById(id);
+
+// ── Login ─────────────────────────────────────────────────────────
+async function doLogin() {
+  const pin = $('pinInput').value.trim().toUpperCase();
+  if (!pin) { $('loginErr').textContent = 'Ingresá el código.'; return; }
+  const btn = $('loginBtn');
+  btn.disabled = true; btn.classList.add('loading');
+  $('loginErr').textContent = '';
+  try {
+    // FIX #5: timeout en login también
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ _ping: true, pin }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    const data = await res.json();
+    if (data.ok && data.role === 'dashboard') {
+      dashPin = pin;
+      $('loginScreen').style.display  = 'none';
+      $('dashboardPage').style.display = 'block';
+      dLoadData();
+    } else {
+      $('loginErr').textContent = data.error || 'Código incorrecto.';
+      btn.disabled = false; btn.classList.remove('loading');
+    }
+  } catch(e) {
+    $('loginErr').textContent = e.name === 'AbortError'
+      ? 'Tiempo de espera agotado. Intentá de nuevo.'
+      : 'Error de conexión. Intentá de nuevo.';
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+}
+
+function dExit() {
+  dashPin = ''; allRows = [];
+  $('dashboardPage').style.display = 'none';
+  $('loginScreen').style.display   = 'flex';
+  $('pinInput').value = '';
+  $('loginBtn').disabled = false;
+  $('loginBtn').classList.remove('loading');
+  $('loginErr').textContent = '';
+  $('dCsvBtn').disabled = true;
+}
+
+// ── Helpers ───────────────────────────────────────────────────────
+function dSet(id, val, sub) {
+  $(id).textContent = val ?? '—';
+  const s = $(id+'Sub');
+  if (s && sub !== undefined) s.textContent = sub;
+}
+function dErr(msg) {
+  const el = $('dErrBox'); el.textContent = msg; el.classList.toggle('show', !!msg);
+}
+function dEsc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function dEmpty(icon) {
+  return `<div class="d-empty"><div class="d-empty-icon">${icon}</div><div class="d-empty-text">Sin datos aún</div></div>`;
+}
+function stars(n) {
+  return '★'.repeat(Math.min(5, Math.max(0, Number(n) || 0)));
+}
+
+// ── Carga ─────────────────────────────────────────────────────────
+// FIX #5: AbortController con timeout en dLoadData
+async function dLoadData() {
+  $('dRefreshBtn').classList.add('loading');
+  dErr('');
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 18000);
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ _dashboard: true, pin: dashPin }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    const data = await res.json();
+    if (!data.ok) { dErr(data.error || 'Error al cargar datos.'); return; }
+    allRows = Array.isArray(data.rows) ? data.rows : [];
+    dRenderAll(allRows, data);
+    $('dLastUpdate').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+    $('dCsvBtn').disabled = allRows.length === 0;
+  } catch(e) {
+    clearTimeout(timer);
+    dErr('⚠️ ' + (e.name==='AbortError' ? 'Tiempo de espera agotado. Intentá de nuevo.' : e.message || 'Error de conexión.'));
+    $('dLastUpdate').textContent = 'Error';
+  } finally {
+    $('dRefreshBtn').classList.remove('loading');
+  }
+}
+
+function dRenderAll(rows, data) {
+  dRenderKPI(rows, data);
+  dRenderStars(rows);
+  dRenderEncontro(rows);
+  dRenderChips(rows);
+  dRenderTimeline(rows);
+  dRenderTable(rows);
+}
+
+// KPIs
+function dRenderKPI(rows, data) {
+  const total = rows.length || data.total || 0;
+  dSet('dKpiTotal', total, total + ' encuesta' + (total!==1?'s':''));
+
+  const sats = rows.map(r=>Number(r[4])).filter(n=>n>=1&&n<=5);
+  const satAvg = sats.length ? (sats.reduce((a,b)=>a+b,0)/sats.length).toFixed(1) : (data.satisfaccion_promedio||null);
+  dSet('dKpiSat', satAvg ? satAvg+' / 5' : '—', sats.length ? sats.length+' calificaciones' : 'Sin datos');
+
+  const facs = rows.map(r=>Number(r[5])).filter(n=>n>=1&&n<=5);
+  const facAvg = facs.length ? (facs.reduce((a,b)=>a+b,0)/facs.length).toFixed(1) : (data.facilidad_promedio||null);
+  dSet('dKpiFac', facAvg ? facAvg+' / 5' : '—', facs.length ? facs.length+' calificaciones' : 'Sin datos');
+
+  // FIX #10: KPI = Sí + Más o menos (resolvió algo)
+  const si      = rows.filter(r=>String(r[6])==='Sí, encontré lo que buscaba').length;
+  const parcial = rows.filter(r=>String(r[6])==='Más o menos').length;
+  const resolvio = si + parcial;
+  const pct = total ? Math.round(resolvio/total*100) : 0;
+  dSet('dKpiEncontro', total ? pct+'%' : '—', `${si} sí · ${parcial} parcial · de ${total}`);
+}
+
+// Estrellas
+function dRenderStars(rows) {
+  const satC={5:0,4:0,3:0,2:0,1:0}, facC={5:0,4:0,3:0,2:0,1:0};
+  rows.forEach(r=>{
+    const s=Number(r[4]); if(s>=1&&s<=5) satC[s]++;
+    const f=Number(r[5]); if(f>=1&&f<=5) facC[f]++;
+  });
+  const satT=Object.values(satC).reduce((a,b)=>a+b,0);
+  const facT=Object.values(facC).reduce((a,b)=>a+b,0);
+  const el=$('dStars');
+  if(!satT&&!facT){ el.innerHTML=dEmpty('⭐'); return; }
+  const satMax=Math.max(...Object.values(satC),1), facMax=Math.max(...Object.values(facC),1);
+  el.innerHTML=[5,4,3,2,1].map(n=>{
+    const sv=satC[n], sp=satT?Math.round(sv/satT*100):0;
+    const fv=facC[n], fp=facT?Math.round(fv/facT*100):0;
+    return `
+      <div class="d-star-row">
+        <div class="d-star-lbl sat" title="Satisfacción">${'★'.repeat(n)}</div>
+        <div class="d-star-track"><div class="d-star-fill-sat" style="width:${Math.round(sv/satMax*100)}%"></div></div>
+        <div class="d-star-pct">${sp}%</div>
+      </div>
+      <div class="d-star-row" style="margin-bottom:4px">
+        <div class="d-star-lbl fac" title="Facilidad">${'☆'.repeat(n)}</div>
+        <div class="d-star-track"><div class="d-star-fill-fac" style="width:${Math.round(fv/facMax*100)}%"></div></div>
+        <div class="d-star-pct">${fp}%</div>
+      </div>`;
+  }).join('');
+}
+
+// Donut encontró
+function dRenderEncontro(rows) {
+  const counts = {
+    'Sí, encontré lo que buscaba': 0,
+    'Más o menos':                 0,
+    'No encontré lo que buscaba':  0,
+  };
+  rows.forEach(r=>{ const v=String(r[6]||''); if(v in counts) counts[v]++; });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  const el = $('dEncontro');
+  if(!total){ el.innerHTML=dEmpty('🍩'); return; }
+  const pal=[['#2E7D32','#66BB6A'],['#F59E0B','#FCD34D'],['#B91C1C','#EF4444']];
+  const entries=Object.entries(counts);
+  let cum=0;
+  const angles=entries.map(([,v])=>{ const a=v/total*360; const o={start:cum,end:cum+a}; cum+=a; return o; });
+  const R=52,r=32,cx=66,cy=66;
+  function arc(s,e){
+    const sr=(s-90)*Math.PI/180,er=(e-90)*Math.PI/180,ls=e-s>180?1:0;
+    return `M${cx+R*Math.cos(sr)} ${cy+R*Math.sin(sr)} A${R} ${R} 0 ${ls} 1 ${cx+R*Math.cos(er)} ${cy+R*Math.sin(er)} L${cx+r*Math.cos(er)} ${cy+r*Math.sin(er)} A${r} ${r} 0 ${ls} 0 ${cx+r*Math.cos(sr)} ${cy+r*Math.sin(sr)} Z`;
+  }
+  const paths=entries.map(([lbl,v],i)=>{
+    if(!v) return '';
+    const {start,end}=angles[i];
+    return `<path d="${arc(start,end<start+0.5?start+0.5:end)}" fill="${pal[i][0]}" opacity="0.85"><title>${lbl}: ${v}</title></path>`;
+  }).join('');
+  // FIX #10: mostrar % "resolvió" (si+parcial) en el centro
+  const resolvio = counts['Sí, encontré lo que buscaba'] + counts['Más o menos'];
+  const pct = Math.round(resolvio/total*100);
+  const svg=`<svg width="132" height="132" viewBox="0 0 132 132"><circle cx="${cx}" cy="${cy}" r="${R}" fill="#131813"/>${paths}<text x="${cx}" y="${cy}" text-anchor="middle" dy="0.35em" fill="#E8F5E9" font-family="Fraunces,serif" font-size="17" font-weight="800">${pct}%</text><text x="${cx}" y="${cy+14}" text-anchor="middle" fill="rgba(200,230,200,0.35)" font-family="DM Sans,sans-serif" font-size="8">resolvieron</text></svg>`;
+  const legend=entries.map(([lbl,v],i)=>
+    `<div class="d-legend-item"><div class="d-legend-dot" style="background:${pal[i][0]}"></div><span>${lbl}</span><span class="d-legend-val">${v} (${Math.round(v/total*100)}%)</span></div>`
+  ).join('');
+  el.innerHTML=svg+`<div class="d-legend">${legend}</div>`;
+}
+
+// Chips
+function dRenderChips(rows) {
+  const counts={};
+  rows.forEach(r=>{ const c=String(r[3]||'').trim()||'(sin chip)'; counts[c]=(counts[c]||0)+1; });
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const el=$('dChips');
+  if(!sorted.length){ el.innerHTML=dEmpty('📊'); return; }
+  const max=sorted[0]?.[1]||1;
+  const colors=['#2E7D32','#66BB6A','#0097A7','#80DEEA','#7B6FD4','#F59E0B','#EF4444','#8FB55A'];
+  el.innerHTML=sorted.map(([lbl,n],i)=>`
+    <div class="d-bar-row">
+      <div class="d-bar-lbl" title="${dEsc(lbl)}">${dEsc(lbl)}</div>
+      <div class="d-bar-track"><div class="d-bar-fill" style="width:${Math.round(n/max*100)}%;background:${colors[i%colors.length]}"></div></div>
+      <div class="d-bar-n">${n}</div>
+    </div>`).join('');
+}
+
+// Timeline 14 días
+function dRenderTimeline(rows) {
+  const days=14, now=new Date(), buckets={};
+  for(let i=0;i<days;i++){
+    const d=new Date(now); d.setDate(d.getDate()-(days-1-i));
+    buckets[d.toLocaleDateString('es-AR')]=0;
+  }
+  rows.forEach(r=>{ const k=String(r[0]||''); if(k in buckets) buckets[k]++; });
+  const vals=Object.values(buckets), maxV=Math.max(...vals,1), keys=Object.keys(buckets);
+  $('dTlBars').innerHTML=vals.map((v,i)=>
+    `<div class="d-tl-bar" style="height:${Math.max(3,Math.round(v/maxV*68))}px;opacity:${(0.35+0.65*v/maxV).toFixed(2)}" title="${keys[i]}: ${v} encuesta${v!==1?'s':''}"></div>`
+  ).join('');
+  $('dTlLabels').innerHTML=keys.map((k,i)=>{
+    const p=k.split('/'), show=(i%3===0||i===keys.length-1)?p[0]+'/'+p[1]:'';
+    return `<div class="d-tl-lbl">${show}</div>`;
+  }).join('');
+}
+
+// Tabla últimas 30
+function dRenderTable(rows) {
+  const tbody=$('dTableBody');
+  const recent=rows.slice(-30).reverse();
+  if(!recent.length){
+    tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:28px;color:rgba(200,230,200,0.3)">Sin registros aún</td></tr>`;
+    return;
+  }
+  const cls={
+    'Sí, encontré lo que buscaba': 'd-pill-g',
+    'Más o menos':                 'd-pill-a',
+    'No encontré lo que buscaba':  'd-pill-r',
+  };
+  // Etiqueta corta para móvil
+  const short={
+    'Sí, encontré lo que buscaba': 'Sí',
+    'Más o menos':                 'Parcial',
+    'No encontré lo que buscaba':  'No',
+  };
+  tbody.innerHTML=recent.map(r=>`<tr>
+    <td>${dEsc(String(r[0]||''))}</td>
+    <td class="d-col-hora">${dEsc(String(r[1]||''))}</td>
+    <td class="d-col-muni">${dEsc(String(r[2]||''))}</td>
+    <td>${dEsc(String(r[3]||'—'))}</td>
+    <td class="d-stars-cell">${r[4]?stars(r[4]):'—'}</td>
+    <td class="d-stars-cell">${r[5]?stars(r[5]):'—'}</td>
+    <td>${r[6]?`<span class="d-pill ${cls[r[6]]||'d-pill-a'}">${dEsc(short[r[6]]||String(r[6]))}</span>`:'—'}</td>
+  </tr>`).join('');
+}
+
+// FIX: exportar CSV desde datos en memoria
+function exportCSV() {
+  if (!allRows.length) return;
+  const headers = ['Fecha','Hora','Municipio','Chip','Satisfacción','Facilidad','Encontró','Session ID','Fecha ISO'];
+  const escape  = v => { const s=String(v??''); return s.includes(',')||s.includes('"')||s.includes('\n') ? `"${s.replace(/"/g,'""')}"` : s; };
+  const lines   = [headers.join(','), ...allRows.map(r => r.map(escape).join(','))];
+  const blob    = new Blob(['\ufeff'+lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const url     = URL.createObjectURL(blob);
+  const a       = document.createElement('a');
+  a.href = url; a.download = `bizcochuela_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// Init — timeline vacío para que los divs existan antes del primer load
+dRenderTimeline([]);
+
+// Escape sale del dashboard (vuelve al login)
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && $('dashboardPage').style.display !== 'none') dExit();
+});
+</script>
+</body>
+</html>

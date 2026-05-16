@@ -3,28 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="Bizcochuela — Asistente gratuita para familias que acompañan a sus hijos en primaria">
-<meta name="theme-color" content="#2E7D32">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src https://i.imgur.com data:; connect-src https://bizcochuela-familias.abfacundotorres.workers.dev;">
-<title>Bizcochuela — Para familias de primaria</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Aula Clara — Asistente pedagógica para docentes y directivos de primaria en Córdoba">
+<meta name="theme-color" content="#D95F1A">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src https://i.imgur.com data:; connect-src https://aulaclara.abfacundotorres.workers.dev https://api.groq.com;">
+<title>Aula Clara — Asistente Pedagógica</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D95F1A'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='700' fill='%23FFF8F0' text-anchor='middle'%3EAC%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D95F1A'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='700' fill='%23FFF8F0' text-anchor='middle'%3EAC%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<script>
+  window._docxReady = false;
+  window._docxError = false;
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js';
+  s.onload  = () => { window._docxReady = true; };
+  s.onerror = () => { window._docxError = true; };
+  document.head.appendChild(s);
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --cream: #F1F8F1; --warm-white: #F9FBF9;
-    --orange: #2E7D32; --orange-hover: #1B5E20; --orange-light: #66BB6A; --orange-pale: #E8F5E9;
-    --amber-pale: #F1F8E9; --brown-dark: #1B3A1C; --brown-mid: #2E7D32; --brown-light: #4CAF50;
-    --border: #C8E6C9; --green: #3A7D2C; --green-pale: #EAF3DE; --red: #B91C1C; --red-pale: #FEE2E2;
+    --cream: #FDF6EC; --warm-white: #FFFAF4;
+    --orange: #D95F1A; --orange-hover: #C05518; --orange-light: #F2824A; --orange-pale: #FDEBD8;
+    --amber-pale: #FEF3D8; --brown-dark: #3D1F0A; --brown-mid: #7A3B10; --brown-light: #C47A3A;
+    --border: #EDD5B0; --green: #3A7D2C; --green-pale: #EAF3DE; --red: #B91C1C; --red-pale: #FEE2E2;
   }
   html { height: 100%; }
   body { height: 100%; background: var(--cream); font-family: 'DM Sans', system-ui, sans-serif; color: var(--brown-dark); overflow: hidden; -webkit-font-smoothing: antialiased; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle at 20% 20%, rgba(46,125,50,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(102,187,106,0.06) 0%, transparent 50%); pointer-events: none; z-index: 0; }
-  .page { position: relative; z-index: 1; height: 100vh; height: 100dvh; display: flex; flex-direction: column; max-width: 680px; margin: 0 auto; padding: 14px 14px 0; }
-  @media (max-width: 900px) { .page { position: fixed; inset: 0; height: auto; max-width: 100%; margin: 0; } }
+  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle at 20% 20%, rgba(232,160,32,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(217,95,26,0.07) 0%, transparent 50%); pointer-events: none; z-index: 0; }
+
+  /* ── Layout principal ── */
+  /* Desktop: layout flex normal */
+  .page {
+    position: relative; z-index: 1;
+    height: 100vh; height: 100dvh;
+    display: flex; flex-direction: column;
+    max-width: 680px; margin: 0 auto;
+    padding: 14px 14px 0;
+  }
+
+  /* Mobile + tablet: fixed para que el teclado no empuje el header fuera de pantalla */
+  @media (max-width: 900px) {
+    .page {
+      position: fixed;
+      inset: 0;
+      height: auto;
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  /* Header: flex-shrink:0 — nunca se comprime */
   .header { display: flex; align-items: center; gap: 12px; padding: 12px 18px; background: var(--warm-white); border: 1px solid var(--border); border-radius: 20px; margin-bottom: 10px; flex-shrink: 0; }
+
+  /* Mensajes: ocupa todo el espacio restante, scroll interno */
+  .messages { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 2px 14px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
   .avatar-ring { width: 54px; height: 54px; border-radius: 50%; background: var(--orange-pale); border: 2.5px solid var(--orange); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; font-size: 22px; }
   .avatar-ring img { width: 50px; height: 50px; object-fit: cover; }
   .header-text { flex: 1; min-width: 0; }
@@ -32,40 +67,62 @@
   .header-sub { font-size: 11px; color: var(--brown-light); margin-top: 2px; white-space: normal; line-height: 1.3; }
   .status-badge { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; white-space: nowrap; transition: background 0.3s, color 0.3s; }
   .status-badge.online  { color: var(--green); background: var(--green-pale); }
-  .status-badge.offline { color: var(--red);   background: var(--red-pale); }
+  .status-badge.offline { color: var(--red); background: var(--red-pale); }
   .status-dot { width: 6px; height: 6px; border-radius: 50%; }
   .status-badge.online  .status-dot { background: var(--green); animation: pulse 2.5s ease-in-out infinite; }
   .status-badge.offline .status-dot { background: var(--red); }
-  @keyframes pulse { 0%, 100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.3); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
   .offline-banner { display: none; background: var(--red-pale); color: var(--red); border: 1px solid #FECACA; border-radius: 10px; padding: 8px 14px; font-size: 12px; text-align: center; margin-bottom: 8px; flex-shrink: 0; }
   .offline-banner.visible { display: block; }
-  .messages { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 2px 14px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .messages::-webkit-scrollbar { width: 4px; }
   .messages::-webkit-scrollbar-track { background: transparent; }
   .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
   .msg-row { display: flex; gap: 9px; animation: slideUp 0.22s ease-out both; }
-  @keyframes slideUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   .msg-row.user { flex-direction: row-reverse; }
   .msg-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--orange-pale); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; align-self: flex-start; font-size: 20px; }
   .msg-avatar img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
   .bubble-wrap { display: flex; flex-direction: column; gap: 4px; max-width: 78%; }
   .msg-row.user .bubble-wrap { align-items: flex-end; }
   .bubble { padding: 10px 15px; border-radius: 18px; font-size: 14px; line-height: 1.65; word-break: break-word; }
-  .msg-row.bot  .bubble { background: var(--warm-white); border: 1px solid var(--border); color: var(--brown-dark); border-bottom-left-radius: 5px; }
+  .msg-row.bot .bubble { background: var(--warm-white); border: 1px solid var(--border); color: var(--brown-dark); border-bottom-left-radius: 5px; }
   .msg-row.user .bubble { background: var(--orange); color: #FFF8F0; border-bottom-right-radius: 5px; }
   .bubble strong { font-weight: 500; }
   .bubble em { font-style: italic; opacity: 0.85; }
-  .bubble p { margin: 0 0 6px; } .bubble p:last-child { margin-bottom: 0; }
+  .bubble p { margin: 0 0 6px; }
+  .bubble p:last-child { margin-bottom: 0; }
   .bubble ul, .bubble ol { padding-left: 20px; margin: 6px 0; }
   .bubble li { margin-bottom: 4px; }
-  .bubble ul li { list-style-type: disc; } .bubble ol li { list-style-type: decimal; }
+  .bubble ul li { list-style-type: disc; }
+  .bubble ol li { list-style-type: decimal; }
   .bubble hr { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
-  .typing-row { display: none; } .typing-row.visible { display: flex; }
+
+  /* Barra de progreso Plan Anual */
+  .plan-progress { display: none; background: var(--warm-white); border: 1px solid var(--border); border-radius: 14px; padding: 10px 16px; margin-bottom: 8px; flex-shrink: 0; }
+  .plan-progress.visible { display: block; }
+  .plan-progress-label { font-size: 11px; color: var(--brown-mid); margin-bottom: 6px; font-weight: 500; }
+  .plan-progress-steps { display: flex; gap: 8px; }
+  .plan-step { flex: 1; height: 6px; border-radius: 3px; background: var(--border); transition: background 0.3s; }
+  .plan-step.done    { background: var(--green); }
+  .plan-step.current { background: var(--orange); }
+
+  .bubble-actions { display: flex; gap: 6px; padding: 0 4px; flex-wrap: wrap; }
+  .action-btn { display: flex; align-items: center; gap: 4px; font-size: 11px; padding: 4px 10px; background: transparent; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; color: var(--brown-light); transition: background 0.15s, color 0.15s; font-family: 'DM Sans', system-ui, sans-serif; }
+  .action-btn:hover { background: var(--orange-pale); color: var(--orange); border-color: var(--orange); }
+  .action-btn.download { background: var(--orange); color: #FFF8F0; border-color: var(--orange); font-weight: 500; }
+  .action-btn.download:hover { background: var(--orange-hover); }
+  .action-btn.download-full { background: var(--green); border-color: var(--green); color: #FFF8F0; font-weight: 500; }
+  .action-btn.download-full:hover { background: #2d6624; }
+  .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .typing-row { display: none; }
+  .typing-row.visible { display: flex; }
   .typing-dots { display: flex; gap: 5px; align-items: center; padding: 11px 15px; background: var(--warm-white); border: 1px solid var(--border); border-radius: 18px; border-bottom-left-radius: 5px; }
   .typing-dots span { width: 7px; height: 7px; background: var(--orange-light); border-radius: 50%; animation: bounce 1.3s ease-in-out infinite; opacity: 0.4; }
   .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
   .typing-dots span:nth-child(3) { animation-delay: 0.30s; }
-  @keyframes bounce { 0%,60%,100% { transform:translateY(0); opacity:0.4; } 30% { transform:translateY(-7px); opacity:1; } }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-7px); opacity: 1; } }
+
   .input-area { padding: 10px 0 14px; flex-shrink: 0; }
   .input-wrap { display: flex; gap: 8px; align-items: flex-end; background: var(--warm-white); border: 1.5px solid var(--border); border-radius: 24px; padding: 8px 8px 8px 16px; transition: border-color 0.2s; }
   .input-wrap:focus-within { border-color: var(--orange); }
@@ -73,7 +130,8 @@
   #userInput::placeholder { color: var(--brown-light); opacity: 0.55; }
   .input-footer { display: flex; justify-content: flex-end; padding: 3px 6px 0; }
   .char-count { font-size: 10px; color: var(--brown-light); opacity: 0.5; transition: color 0.2s, opacity 0.2s; }
-  .char-count.warn  { color: #B45309; opacity: 0.9; } .char-count.limit { color: var(--red); opacity: 1; }
+  .char-count.warn  { color: #B45309; opacity: 0.9; }
+  .char-count.limit { color: var(--red); opacity: 1; }
   .send-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--orange); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, transform 0.1s; }
   .send-btn:hover:not(:disabled) { background: var(--orange-hover); }
   .send-btn:active:not(:disabled) { transform: scale(0.92); }
@@ -87,67 +145,121 @@
   .toast { position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--brown-dark); color: #FFF8F0; padding: 8px 18px; border-radius: 20px; font-size: 13px; opacity: 0; transition: opacity 0.25s, transform 0.25s; pointer-events: none; z-index: 100; white-space: nowrap; max-width: 90vw; text-align: center; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* FIX: opacity+transform en vez de display para evitar flash de posición */
+  /* ── Botones flotantes (resumen + encuesta) ── */
+  .float-toast {
+    position: fixed;
+    left: 50%;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 3px 16px rgba(217,95,26,0.22);
+    transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+    white-space: nowrap;
+    transform: translateX(calc(min(340px, 50vw) - 100% - 14px));
+  }
+  .float-toast.visible {
+    display: flex;
+    animation: floatIn 0.25s ease-out forwards;
+  }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateX(calc(min(340px, 50vw) - 100% - 14px)) translateY(10px); }
+    to   { opacity: 1; transform: translateX(calc(min(340px, 50vw) - 100% - 14px)) translateY(0); }
+  }
+  #resumeBtn {
+    bottom: 158px;
+    background: var(--warm-white);
+    border: 2px solid var(--orange);
+    color: var(--orange);
+  }
+  #resumeBtn:hover { background: var(--orange-pale); box-shadow: 0 5px 20px rgba(217,95,26,0.28); }
   #surveyFloatBtn {
-    position: fixed; bottom: 80px; left: 50%;
-    transform: translateX(calc(min(340px, 50vw) - 100% - 14px)) translateY(12px);
-    z-index: 10; display: flex; align-items: center; gap: 8px;
-    padding: 12px 22px; border-radius: 24px; font-size: 14px; font-weight: 600;
-    font-family: 'DM Sans', system-ui, sans-serif; cursor: pointer;
-    box-shadow: 0 3px 16px rgba(46,125,50,0.22); white-space: nowrap;
-    background: var(--orange); border: none; color: #FFF8F0;
-    opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+    bottom: 108px;
+    background: var(--orange);
+    border: none;
+    color: #FFF8F0;
   }
-  #surveyFloatBtn.visible {
-    opacity: 1; pointer-events: all;
-    transform: translateX(calc(min(340px, 50vw) - 100% - 14px)) translateY(0);
-  }
-  #surveyFloatBtn:hover { background: var(--orange-hover); }
+  #surveyFloatBtn:hover { background: var(--orange-hover); box-shadow: 0 5px 20px rgba(217,95,26,0.32); }
 
-  /* Modal encuesta */
-  .modal-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(27,58,28,0.45); backdrop-filter: blur(2px); display: flex; align-items: flex-end; justify-content: center; padding: 20px 20px 32px; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-  @media (min-height: 600px) { .modal-overlay { align-items: center; padding: 20px; } }
+  /* ── Modal encuesta ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(61,31,10,0.45); backdrop-filter: blur(2px);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 20px 20px 32px; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  @media (min-height: 600px) {
+    .modal-overlay { align-items: center; padding: 20px; }
+  }
   .modal-overlay.visible { opacity: 1; pointer-events: all; }
-  .modal-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 24px; padding: 28px 24px; max-width: 360px; width: 100%; text-align: center; box-shadow: 0 8px 32px rgba(27,58,28,0.14); transform: translateY(12px); transition: transform 0.2s; }
+  .modal-card {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 24px; padding: 28px 24px; max-width: 360px; width: 100%;
+    text-align: center; box-shadow: 0 8px 32px rgba(61,31,10,0.14);
+    transform: translateY(12px); transition: transform 0.2s;
+  }
   .modal-overlay.visible .modal-card { transform: translateY(0); }
   .modal-title { font-family: 'Fraunces', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
   .modal-sub { font-size: 12px; color: var(--brown-light); margin-bottom: 20px; }
-  .modal-label { font-size: 12px; font-weight: 500; color: var(--brown-mid); margin-bottom: 6px; text-align: left; }
-  /* FIX: estrellas con hover preview via JS */
-  .star-group { display: flex; justify-content: center; gap: 6px; margin-bottom: 18px; }
-  .star-group .star { font-size: 26px; cursor: pointer; opacity: 0.25; transition: opacity 0.1s, transform 0.1s; user-select: none; }
-  .star-group .star.active  { opacity: 1; }
-  .star-group .star.preview { opacity: 0.6; transform: scale(1.1); }
-  .modal-actions { display: flex; gap: 8px; margin-top: 4px; }
+  .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+  .star { font-size: 28px; cursor: pointer; opacity: 0.35; transition: opacity 0.15s, transform 0.1s; user-select: none; }
+  .star:hover, .star.active { opacity: 1; transform: scale(1.15); }
+  .modal-label { font-size: 12px; font-weight: 500; color: var(--brown-mid); margin-bottom: 8px; text-align: left; }
+  .modal-select {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+    border-radius: 12px; font-size: 13px; font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--brown-dark); background: var(--cream); outline: none;
+    transition: border-color 0.2s; margin-bottom: 20px;
+  }
+  .modal-select:focus { border-color: var(--orange); }
+  .modal-actions { display: flex; gap: 8px; }
   .modal-btn { flex: 1; padding: 11px; border-radius: 12px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif; transition: background 0.15s; border: none; }
   .modal-btn.primary { background: var(--orange); color: #FFF8F0; }
   .modal-btn.primary:hover { background: var(--orange-hover); }
   .modal-btn.primary:disabled { opacity: 0.5; cursor: not-allowed; }
-  /* FIX: spinner en botón enviar */
-  .modal-btn.primary.loading { position: relative; color: transparent; pointer-events: none; }
-  .modal-btn.primary.loading::after { content:''; position:absolute; inset:0; margin:auto; width:16px; height:16px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); border-top-color:#FFF8F0; animation:spin 0.6s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
   .modal-btn.secondary { background: transparent; color: var(--brown-light); border: 1.5px solid var(--border); }
   .modal-btn.secondary:hover { background: var(--orange-pale); }
-  .encontro-btns { display: flex; gap: 6px; margin-bottom: 18px; }
-  .encontro-btn { flex: 1; padding: 8px 4px; border-radius: 10px; font-size: 11px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif; border: 1.5px solid var(--border); background: var(--cream); color: var(--brown-dark); transition: all 0.15s; line-height: 1.4; text-align: center; }
-  .encontro-btn.active { background: var(--orange); color: #FFF8F0; border-color: var(--orange); }
-  .encontro-btn:hover:not(.active) { background: var(--orange-pale); border-color: var(--orange); }
+  .uso-btns { display: flex; gap: 6px; margin-bottom: 20px; }
+  .uso-btn {
+    flex: 1; padding: 8px 4px; border-radius: 10px; font-size: 11px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif;
+    border: 1.5px solid var(--border); background: var(--cream);
+    color: var(--brown-dark); transition: all 0.15s; line-height: 1.4;
+  }
+  .uso-btn.active { background: var(--orange); color: #FFF8F0; border-color: var(--orange); }
+  .uso-btn:hover:not(.active) { background: var(--orange-pale); border-color: var(--orange); }
   .modal-thanks { display: none; padding: 16px 0 4px; }
   .modal-thanks-icon { font-size: 36px; margin-bottom: 8px; }
   .modal-thanks p { font-size: 13px; color: var(--brown-light); line-height: 1.5; }
 
-  /* Onboarding */
-  .onboarding-overlay { position: fixed; inset: 0; z-index: 400; background: rgba(27,58,28,0.55); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  /* ── Onboarding ── */
+  .onboarding-overlay {
+    position: fixed; inset: 0; z-index: 400;
+    background: rgba(61,31,10,0.55); backdrop-filter: blur(3px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
   .onboarding-overlay.visible { opacity: 1; pointer-events: all; }
-  .onboarding-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 28px; padding: 32px 28px 24px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 12px 48px rgba(27,58,28,0.18); transform: translateY(16px); transition: transform 0.3s; }
+  .onboarding-card {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 28px; padding: 32px 28px 24px; max-width: 380px; width: 100%;
+    text-align: center; box-shadow: 0 12px 48px rgba(61,31,10,0.18);
+    transform: translateY(16px); transition: transform 0.3s;
+  }
   .onboarding-overlay.visible .onboarding-card { transform: translateY(0); }
   .ob-steps { display: flex; justify-content: center; gap: 6px; margin-bottom: 28px; }
   .ob-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.2s; }
   .ob-dot.active { background: var(--orange); width: 22px; border-radius: 4px; }
   .ob-icon { font-size: 48px; margin-bottom: 16px; line-height: 1; }
   .ob-title { font-family: 'Fraunces', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: var(--brown-dark); margin-bottom: 10px; }
-  .ob-text { font-size: 13px; color: var(--brown-light); line-height: 1.6; margin-bottom: 28px; min-height: 60px; }
+  .ob-text { font-size: 13px; color: var(--brown-light); line-height: 1.6; margin-bottom: 28px; min-height: 56px; }
   .ob-actions { display: flex; gap: 8px; }
   .ob-btn-skip { flex: 1; padding: 11px; border-radius: 12px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif; background: transparent; color: var(--brown-light); border: 1.5px solid var(--border); transition: background 0.15s; }
   .ob-btn-skip:hover { background: var(--orange-pale); }
@@ -158,28 +270,177 @@
     .page { padding: 8px 8px 0; }
     .header { padding: 10px 13px; border-radius: 16px; }
     .header-name { font-size: 1.05rem; }
-    .bubble { font-size: 13px; } .bubble-wrap { max-width: 82%; }
-    .msg-avatar { width: 44px; height: 44px; } .msg-avatar img { width: 40px; height: 40px; }
-    .suggestions { gap: 6px; } .chip { font-size: 11px; padding: 5px 10px; }
-    .toast { bottom: 72px; font-size: 12px; }
-    #surveyFloatBtn { bottom: 64px; font-size: 13px; padding: 11px 18px; transform: translateX(calc(50vw - 100% - 10px)) translateY(12px); }
-    #surveyFloatBtn.visible { transform: translateX(calc(50vw - 100% - 10px)) translateY(0); }
+    .bubble { font-size: 13px; }
+    .bubble-wrap { max-width: 82%; }
+    .msg-avatar { width: 44px; height: 44px; }
+    .msg-avatar img { width: 40px; height: 40px; }
+    .suggestions { gap: 6px; }
+    .chip { font-size: 11px; padding: 5px 10px; }
+    .toast { bottom: 80px; font-size: 12px; }
+    .float-toast { transform: translateX(calc(50vw - 100% - 10px)); font-size: 13px; padding: 11px 18px; }
+    #resumeBtn { bottom: 112px; }
+    #surveyFloatBtn { bottom: 64px; }
+  }
+
+  /* ── Dashboard ── */
+  #dashboardPage { display:none; min-height:100vh; background:#0D0A07; color:#F5ECD8; font-family:'DM Sans',system-ui,sans-serif; overflow-y:auto; }
+  #dashboardPage::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:200px; opacity:0.6; }
+
+  /* ── Layout base ── */
+  .d-wrap { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:36px 24px 80px; }
+
+  /* ── Header ── */
+  .d-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; gap:16px; }
+  .d-logo { display:flex; align-items:center; gap:14px; min-width:0; }
+  .d-logo-badge { width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,#E06820,#E8A830); display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 4px 20px rgba(224,104,32,0.4); flex-shrink:0; }
+  .d-logo h1 { font-family:'Fraunces',Georgia,serif; font-size:1.3rem; font-weight:800; letter-spacing:-0.02em; white-space:nowrap; }
+  .d-logo p { font-size:11px; color:rgba(245,236,216,0.35); margin-top:2px; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .d-top-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .d-last { font-size:11px; color:rgba(245,236,216,0.35); font-family:'DM Mono',monospace; white-space:nowrap; }
+  .d-btn { padding:7px 14px; border-radius:10px; font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+  .d-btn-refresh { background:#1E1915; border:1px solid rgba(237,213,176,0.18); color:rgba(245,236,216,0.55); display:flex; align-items:center; gap:6px; }
+  .d-btn-refresh:hover { border-color:#E06820; color:#F28C4E; }
+  .d-btn-refresh.loading .d-ri { animation:dspin 0.8s linear infinite; display:inline-block; }
+  @keyframes dspin { to { transform:rotate(360deg); } }
+  .d-btn-exit { background:transparent; border:1px solid rgba(237,213,176,0.10); color:rgba(245,236,216,0.35); }
+  .d-btn-exit:hover { border-color:#B91C1C; color:#FCA5A5; }
+  .d-err { background:rgba(185,28,28,0.12); border:1px solid rgba(185,28,28,0.3); border-radius:12px; padding:12px 16px; font-size:13px; color:#FCA5A5; margin-bottom:20px; display:none; }
+  .d-err.show { display:block; }
+
+  /* ── KPI grid: 4 columnas en desktop, 2×2 en mobile ── */
+  .d-kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+  .d-kpi { background:#161210; border:1px solid rgba(237,213,176,0.10); border-radius:18px; padding:22px 20px; position:relative; overflow:hidden; }
+  .d-kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--da,#E06820); }
+  .d-kpi-label { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(245,236,216,0.35); margin-bottom:8px; }
+  .d-kpi-val { font-family:'Fraunces',Georgia,serif; font-size:2.2rem; font-weight:800; line-height:1; margin-bottom:5px; }
+  .d-kpi-sub { font-size:11px; color:rgba(245,236,216,0.35); }
+  .d-kpi-icon { position:absolute; top:16px; right:16px; font-size:20px; opacity:0.18; }
+
+  /* ── Grillas de cards ── */
+  .d-row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  .d-card { background:#161210; border:1px solid rgba(237,213,176,0.10); border-radius:18px; padding:22px; }
+  .d-card-title { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(245,236,216,0.35); margin-bottom:18px; }
+
+  /* ── Barras horizontales (herramientas) ── */
+  .d-bar-list { display:flex; flex-direction:column; gap:9px; }
+  .d-bar-row { display:flex; align-items:center; gap:9px; }
+  .d-bar-lbl { font-size:11px; color:rgba(245,236,216,0.55); width:90px; min-width:0; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .d-bar-track { flex:1; height:7px; background:#1E1915; border-radius:4px; overflow:hidden; min-width:0; }
+  .d-bar-fill { height:100%; border-radius:4px; transition:width 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .d-bar-n { font-family:'DM Mono',monospace; font-size:10px; color:rgba(245,236,216,0.35); min-width:20px; text-align:right; }
+
+  /* ── Dona de uso ── */
+  .d-donut-wrap { display:flex; align-items:center; gap:20px; }
+  .d-donut-wrap svg { flex-shrink:0; }
+  .d-legend { display:flex; flex-direction:column; gap:7px; flex:1; min-width:0; }
+  .d-legend-item { display:flex; align-items:center; gap:7px; font-size:11px; color:rgba(245,236,216,0.55); }
+  .d-legend-dot { width:9px; height:9px; border-radius:3px; flex-shrink:0; }
+  .d-legend-val { font-family:'DM Mono',monospace; font-size:10px; color:rgba(245,236,216,0.35); margin-left:auto; padding-left:6px; white-space:nowrap; }
+
+  /* ── Estrellas ── */
+  .d-stars { display:flex; flex-direction:column; gap:7px; }
+  .d-star-row { display:flex; align-items:center; gap:8px; }
+  .d-star-lbl { font-size:11px; color:#F5C862; min-width:52px; }
+  .d-star-track { flex:1; height:7px; background:#1E1915; border-radius:4px; overflow:hidden; }
+  .d-star-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#E8A830,#F5C862); transition:width 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .d-star-pct { font-family:'DM Mono',monospace; font-size:10px; color:rgba(245,236,216,0.35); min-width:30px; text-align:right; }
+
+  /* ── Timeline ── */
+  .d-tl-bars { display:flex; align-items:flex-end; gap:3px; height:72px; }
+  .d-tl-bar { flex:1; background:#E06820; border-radius:3px 3px 0 0; min-height:3px; transition:height 0.5s cubic-bezier(0.16,1,0.3,1); opacity:0.8; }
+  .d-tl-bar:hover { opacity:1; }
+  .d-tl-labels { display:flex; gap:3px; margin-top:5px; }
+  .d-tl-lbl { flex:1; font-family:'DM Mono',monospace; font-size:9px; color:rgba(245,236,216,0.3); text-align:center; overflow:hidden; }
+
+  /* ── Tabla: desktop normal, mobile = card stacking ── */
+  .d-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .d-table { width:100%; border-collapse:collapse; font-size:11px; }
+  .d-table thead th { font-size:10px; text-transform:uppercase; letter-spacing:0.07em; color:rgba(245,236,216,0.35); padding:7px 10px; text-align:left; border-bottom:1px solid rgba(237,213,176,0.10); white-space:nowrap; }
+  .d-table tbody td { padding:9px 10px; border-bottom:1px solid rgba(237,213,176,0.07); color:rgba(245,236,216,0.55); font-family:'DM Mono',monospace; }
+  .d-table tbody tr:last-child td { border-bottom:none; }
+  .d-table tbody tr:hover td { background:#1E1915; }
+
+  /* ── Pills ── */
+  .d-pill { display:inline-block; padding:2px 7px; border-radius:20px; font-size:10px; font-weight:600; font-family:'DM Sans',sans-serif; }
+  .d-pill-g { background:rgba(90,158,64,0.15); color:#7DC45E; border:1px solid rgba(90,158,64,0.25); }
+  .d-pill-a { background:rgba(232,168,48,0.15); color:#F5C862; border:1px solid rgba(232,168,48,0.25); }
+  .d-pill-r { background:rgba(185,28,28,0.15); color:#FCA5A5; border:1px solid rgba(185,28,28,0.25); }
+
+  /* ── Empty states ── */
+  .d-empty { text-align:center; padding:32px 16px; }
+  .d-empty-icon { font-size:30px; margin-bottom:8px; opacity:0.3; }
+  .d-empty-text { font-size:11px; color:rgba(245,236,216,0.35); }
+
+  /* ── Tablet: ≤900px ── */
+  @media (max-width:900px) {
+    .d-kpi-grid { grid-template-columns:repeat(2,1fr); }
+    .d-last { display:none; }
+  }
+
+  /* ── Mobile: ≤640px ── */
+  @media (max-width:640px) {
+    .d-wrap { padding:16px 12px 60px; }
+
+    /* Header: logo izquierda, botones derecha compactos */
+    .d-top { margin-bottom:24px; gap:10px; }
+    .d-logo-badge { width:38px; height:38px; font-size:17px; border-radius:11px; }
+    .d-logo h1 { font-size:1.05rem; }
+    .d-logo p { display:none; }
+    .d-btn { padding:6px 11px; font-size:11px; }
+
+    /* KPIs: 2×2 */
+    .d-kpi-grid { grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:16px; }
+    .d-kpi { padding:16px 14px; border-radius:14px; }
+    .d-kpi-val { font-size:1.75rem; }
+    .d-kpi-icon { font-size:16px; top:12px; right:12px; }
+
+    /* Cards en columna */
+    .d-row2 { grid-template-columns:1fr; gap:10px; margin-bottom:10px; }
+    .d-card { padding:16px 14px; border-radius:14px; }
+
+    /* Barras: label más corto */
+    .d-bar-lbl { width:72px; font-size:10px; }
+
+    /* Dona: SVG + leyenda lado a lado si caben, si no apilado */
+    .d-donut-wrap { gap:14px; }
+
+    /* Tabla mobile: scroll suave, columna Tiempo oculta */
+    .d-table-wrap { border-radius:10px; overflow:hidden; overflow-x:auto; }
+    .d-table { font-size:10px; min-width:340px; }
+    .d-table thead th { padding:6px 8px; font-size:9px; }
+    .d-table tbody td { padding:8px 8px; }
+    .d-col-tiempo { display:none; }
+
+    /* Timeline: más compacto */
+    .d-tl-bars { height:56px; }
+  }
+
+  /* ── Mobile chico: ≤380px ── */
+  @media (max-width:380px) {
+    .d-kpi-val { font-size:1.5rem; }
+    .d-kpi-label { font-size:9px; }
+    .d-kpi-sub { font-size:10px; }
+    .d-bar-lbl { width:60px; }
+    .d-donut-wrap { flex-direction:column; align-items:flex-start; gap:12px; }
+    .d-legend-val { display:none; }
   }
 </style>
 </head>
 <body>
 
-<!-- z-index 400 — sobre pinScreen y mainPage -->
-<div class="onboarding-overlay" id="onboardingOverlay" role="dialog" aria-modal="true">
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Onboarding -->
+<div class="onboarding-overlay" id="onboardingOverlay">
   <div class="onboarding-card">
     <div class="ob-steps">
       <div class="ob-dot active" id="obDot0"></div>
       <div class="ob-dot" id="obDot1"></div>
       <div class="ob-dot" id="obDot2"></div>
     </div>
-    <div class="ob-icon" id="obIcon">🐾</div>
-    <div class="ob-title" id="obTitle">Hola, soy Bizcochuela</div>
-    <div class="ob-text" id="obText">Soy una maestra cordobesa con 20 años de experiencia. Ahora ayudo a las familias a acompañar a sus hijos en la escuela primaria.</div>
+    <div class="ob-icon" id="obIcon">📝</div>
+    <div class="ob-title" id="obTitle">Planificá en minutos</div>
+    <div class="ob-text" id="obText">Contame el grado, área y contenido. Clara te arma la planificación completa con actividades concretas, listas para usar en el aula.</div>
     <div class="ob-actions">
       <button class="ob-btn-skip" onclick="closeOnboarding()">Saltear</button>
       <button class="ob-btn-next" id="obNextBtn" onclick="obNext()">Siguiente →</button>
@@ -187,81 +448,139 @@
   </div>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<!-- pinScreen: triple-tap en logo revela campo PIN admin -->
-<div id="pinScreen" style="position:fixed;inset:0;z-index:200;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:24px;padding:32px 28px;max-width:360px;width:100%;text-align:center;box-shadow:0 4px 24px rgba(27,58,28,0.08);">
-    <img id="entryLogo" src="https://i.imgur.com/xvR9r3I.jpeg" alt="Bizcochuela"
-      style="width:180px;height:180px;object-fit:contain;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;"
-      onclick="logoTap()"
-      onerror="this.style.display='none'">
-    <div style="font-family:'Fraunces',Georgia,serif;font-size:1.25rem;font-weight:600;color:var(--brown-dark);margin-bottom:8px;">Bizcochuela 🐾</div>
-    <div style="font-size:13px;color:var(--brown-light);margin-bottom:28px;line-height:1.6;">Tu asistente gratuita para acompañar<br>a tus hijos en la escuela primaria.</div>
-
-    <!-- Campo PIN admin — oculto hasta triple tap -->
-    <div id="adminPinWrap" style="display:none;margin-bottom:12px;">
-      <input id="adminPinInput" type="password" placeholder="Código de acceso"
-        maxlength="30" autocomplete="off" spellcheck="false"
-        onkeydown="if(event.key==='Enter') submitPin()"
-        style="width:100%;padding:11px 14px;background:var(--cream);border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:'DM Sans',system-ui,sans-serif;color:var(--brown-dark);text-align:center;letter-spacing:2px;outline:none;transition:border-color 0.2s;"
-        onfocus="this.style.borderColor='var(--orange)'"
-        onblur="this.style.borderColor='var(--border)'">
-      <div id="adminPinErr" style="font-size:11px;color:var(--red);min-height:16px;margin-top:5px;"></div>
-    </div>
-
-    <button id="pinBtn" onclick="submitPin()" style="width:100%;padding:14px;background:var(--orange);color:#FFF8F0;border:none;border-radius:14px;font-size:15px;font-weight:600;font-family:'DM Sans',system-ui,sans-serif;cursor:pointer;transition:background 0.15s;position:relative;">
-      Entrar como familiar 🐾
-    </button>
-    <div style="font-size:11px;color:var(--brown-light);opacity:0.45;margin-top:14px;">Servicio gratuito del municipio · Solo para adultos</div>
-  </div>
-</div>
-
-<!-- FIX: opacity+transform en vez de display/none para evitar flash -->
-<button id="surveyFloatBtn" onclick="openSurvey()" aria-label="Calificar Bizcochuela">
-  ⭐ ¿Cómo te fue?
+<!-- Botón encuesta flotante -->
+<button id="surveyFloatBtn" class="float-toast" onclick="openModal('')" title="¿Te fue útil Clara hoy?">
+  ⭐ ¿Te fue útil?
 </button>
 
+<!-- Botón resumen flotante -->
+<button id="resumeBtn" class="float-toast" title="Generar resumen de esta consulta" onclick="triggerResumen()">
+  📋 Resumen
+</button>
+
+<!-- Modal encuesta de satisfacción -->
 <div class="modal-overlay" id="surveyModal" role="dialog" aria-modal="true" aria-label="Encuesta de satisfacción">
   <div class="modal-card">
     <div id="surveyForm">
-      <div class="modal-title">¿Cómo te fue? 🐾</div>
-      <div class="modal-sub">3 preguntas — menos de 20 segundos</div>
-
-      <div class="modal-label">¿Qué tan útil te resultó?</div>
-      <div class="star-group" id="satRow" onmouseleave="previewStars('sat',0)">
-        <span class="star" data-v="1" onmouseenter="previewStars('sat',1)" onclick="setStar('sat',1)">⭐</span>
-        <span class="star" data-v="2" onmouseenter="previewStars('sat',2)" onclick="setStar('sat',2)">⭐</span>
-        <span class="star" data-v="3" onmouseenter="previewStars('sat',3)" onclick="setStar('sat',3)">⭐</span>
-        <span class="star" data-v="4" onmouseenter="previewStars('sat',4)" onclick="setStar('sat',4)">⭐</span>
-        <span class="star" data-v="5" onmouseenter="previewStars('sat',5)" onclick="setStar('sat',5)">⭐</span>
+      <div class="modal-title">¿Te fue útil? 📝</div>
+      <div class="modal-sub">3 preguntas — menos de 15 segundos</div>
+      <div class="stars" id="starsRow" role="group" aria-label="Utilidad del 1 al 5">
+        <span class="star" data-v="1" onclick="setStar(1)" role="button" aria-label="1 estrella">⭐</span>
+        <span class="star" data-v="2" onclick="setStar(2)" role="button" aria-label="2 estrellas">⭐</span>
+        <span class="star" data-v="3" onclick="setStar(3)" role="button" aria-label="3 estrellas">⭐</span>
+        <span class="star" data-v="4" onclick="setStar(4)" role="button" aria-label="4 estrellas">⭐</span>
+        <span class="star" data-v="5" onclick="setStar(5)" role="button" aria-label="5 estrellas">⭐</span>
       </div>
-
-      <div class="modal-label">¿Qué tan fácil fue de usar?</div>
-      <div class="star-group" id="facRow" onmouseleave="previewStars('fac',0)">
-        <span class="star" data-v="1" onmouseenter="previewStars('fac',1)" onclick="setStar('fac',1)">⭐</span>
-        <span class="star" data-v="2" onmouseenter="previewStars('fac',2)" onclick="setStar('fac',2)">⭐</span>
-        <span class="star" data-v="3" onmouseenter="previewStars('fac',3)" onclick="setStar('fac',3)">⭐</span>
-        <span class="star" data-v="4" onmouseenter="previewStars('fac',4)" onclick="setStar('fac',4)">⭐</span>
-        <span class="star" data-v="5" onmouseenter="previewStars('fac',5)" onclick="setStar('fac',5)">⭐</span>
+      <div class="modal-label">¿Cuánto tiempo te ahorró?</div>
+      <select class="modal-select" id="surveyTiempo">
+        <option value="15">Menos de 15 min</option>
+        <option value="30">30 minutos</option>
+        <option value="60">1 hora</option>
+        <option value="120">Más de 2 horas</option>
+      </select>
+      <div class="modal-label">¿Pudiste usar lo que te generé?</div>
+      <div class="uso-btns" id="usoBtns">
+        <button class="uso-btn" data-v="si" onclick="setUso('si')">✅ Sí, directo</button>
+        <button class="uso-btn" data-v="parcial" onclick="setUso('parcial')">🔧 Lo adapté</button>
+        <button class="uso-btn" data-v="no" onclick="setUso('no')">❌ No me sirvió</button>
       </div>
-
-      <div class="modal-label">¿Encontraste lo que necesitabas?</div>
-      <div class="encontro-btns">
-        <button class="encontro-btn" data-v="si"      onclick="setEncontro('si')">✅ Sí</button>
-        <button class="encontro-btn" data-v="parcial" onclick="setEncontro('parcial')">🤔 Más o menos</button>
-        <button class="encontro-btn" data-v="no"      onclick="setEncontro('no')">❌ No</button>
-      </div>
-
       <div class="modal-actions">
-        <button class="modal-btn secondary" onclick="closeSurvey()">Omitir</button>
+        <button class="modal-btn secondary" onclick="closeModal()">Omitir</button>
         <button class="modal-btn primary" id="surveySubmitBtn" onclick="submitSurvey()" disabled>Enviar</button>
       </div>
     </div>
     <div class="modal-thanks" id="surveyThanks">
-      <div class="modal-thanks-icon">🐾</div>
+      <div class="modal-thanks-icon">🙌</div>
       <div class="modal-title">¡Gracias!</div>
-      <p>Tu opinión ayuda a mejorar Bizcochuela para todas las familias.</p>
+      <p>Tu opinión nos ayuda a mejorar Clara para todos los docentes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard municipio -->
+<div id="dashboardPage">
+  <div class="d-wrap">
+    <div class="d-top">
+      <div class="d-logo">
+        <div class="d-logo-badge">📊</div>
+        <div>
+          <h1>Panel de uso · Clara</h1>
+          <p>Aula Clara — Municipio de Jesús María</p>
+        </div>
+      </div>
+      <div class="d-top-right">
+        <span class="d-last" id="dLastUpdate">Cargando…</span>
+        <button class="d-btn d-btn-refresh" id="dRefreshBtn" onclick="dLoadData()">
+          <span class="d-ri">↺</span> Actualizar
+        </button>
+        <button class="d-btn d-btn-exit" onclick="dExit()">Salir</button>
+      </div>
+    </div>
+
+    <div class="d-err" id="dErr"></div>
+
+    <div class="d-kpi-grid">
+      <div class="d-kpi" style="--da:#E06820"><div class="d-kpi-icon">📋</div><div class="d-kpi-label">Encuestas completadas</div><div class="d-kpi-val" id="dKpiTotal">—</div><div class="d-kpi-sub" id="dKpiTotalSub">Sin datos</div></div>
+      <div class="d-kpi" style="--da:#E8A830"><div class="d-kpi-icon">⭐</div><div class="d-kpi-label">Utilidad promedio</div><div class="d-kpi-val" id="dKpiUtil">—</div><div class="d-kpi-sub" id="dKpiUtilSub">Escala 1–5</div></div>
+      <div class="d-kpi" style="--da:#5A9E40"><div class="d-kpi-icon">✅</div><div class="d-kpi-label">Usaron sin adaptar</div><div class="d-kpi-val" id="dKpiSi">—</div><div class="d-kpi-sub" id="dKpiSiSub">Uso directo</div></div>
+      <div class="d-kpi" style="--da:#7B6FD4"><div class="d-kpi-icon">⏱️</div><div class="d-kpi-label">Tiempo ahorrado est.</div><div class="d-kpi-val" id="dKpiTiempo">—</div><div class="d-kpi-sub" id="dKpiTiempoSub">Horas totales</div></div>
+    </div>
+
+    <div class="d-row2">
+      <div class="d-card"><div class="d-card-title">Herramientas más usadas</div><div class="d-bar-list" id="dChips"><div class="d-empty"><div class="d-empty-icon">📊</div><div class="d-empty-text">Sin datos</div></div></div></div>
+      <div class="d-card"><div class="d-card-title">¿Pudieron usar el documento?</div><div class="d-donut-wrap" id="dUso"><div class="d-empty"><div class="d-empty-icon">🍩</div><div class="d-empty-text">Sin datos</div></div></div></div>
+    </div>
+    <div class="d-row2">
+      <div class="d-card"><div class="d-card-title">Satisfacción docente</div><div class="d-stars" id="dStars"><div class="d-empty"><div class="d-empty-icon">⭐</div><div class="d-empty-text">Sin datos</div></div></div></div>
+      <div class="d-card"><div class="d-card-title">Actividad últimos 14 días</div><div class="d-tl-bars" id="dTlBars"></div><div class="d-tl-labels" id="dTlLabels"></div></div>
+    </div>
+    <div class="d-card" style="margin-top:14px;">
+      <div class="d-card-title">Últimas 20 respuestas</div>
+      <div class="d-table-wrap">
+        <table class="d-table">
+          <thead><tr><th>Fecha</th><th>Herramienta</th><th>Utilidad</th><th class="d-col-tiempo">Tiempo</th><th>Resultado</th></tr></thead>
+          <tbody id="dTableBody"><tr><td colspan="5" style="text-align:center;padding:28px;color:rgba(245,236,216,0.3)">Cargando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pantalla de acceso PIN -->
+<div id="pinScreen" style="
+  position:fixed; inset:0; z-index:200;
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+">
+  <div style="
+    background:var(--warm-white); border:1px solid var(--border);
+    border-radius:24px; padding:32px 28px; max-width:360px; width:100%;
+    text-align:center; box-shadow:0 4px 24px rgba(61,31,10,0.08);
+  ">
+    <img src="https://i.imgur.com/b3l6aey.jpeg" alt="Aula Clara"
+      style="width:200px; height:200px; object-fit:contain; margin-bottom:16px; display:block; margin-left:auto; margin-right:auto;"
+      onerror="this.style.display='none'">
+    <div style="font-size:13px; color:var(--brown-light); margin-bottom:24px; line-height:1.5;">Ingresá tu código de acceso</div>
+    <input id="pinInput" type="text" placeholder="Ej: JESUSMARIA2026"
+      maxlength="20" autocomplete="off" spellcheck="false"
+      style="
+        width:100%; padding:12px 16px; border:1.5px solid var(--border);
+        border-radius:14px; font-size:15px; font-family:'DM Sans',system-ui,sans-serif;
+        text-align:center; text-transform:uppercase; letter-spacing:2px;
+        background:var(--cream); color:var(--brown-dark); outline:none;
+        transition:border-color 0.2s; margin-bottom:8px;
+      "
+    >
+    <div id="pinError" style="font-size:12px; color:var(--red); min-height:18px; margin-bottom:12px;"></div>
+    <button id="pinBtn" onclick="submitPin()" style="
+      width:100%; padding:13px; background:var(--orange); color:#FFF8F0;
+      border:none; border-radius:14px; font-size:15px; font-weight:500;
+      font-family:'DM Sans',system-ui,sans-serif; cursor:pointer;
+      transition:background 0.15s;
+    ">Ingresar</button>
+    <div style="font-size:11px; color:var(--brown-light); opacity:0.5; margin-top:16px;">
+      Si no tenés código, contactá a tu institución.
     </div>
   </div>
 </div>
@@ -269,59 +588,77 @@
 <div class="page" id="mainPage" style="display:none;">
   <header class="header" role="banner">
     <div class="avatar-ring" id="avatarRing">
-      <img src="https://i.imgur.com/xvR9r3I.jpeg" alt="Bizcochuela"
-           onerror="this.style.display='none'; document.getElementById('avatarRing').textContent='🐾';">
+      <img src="https://i.imgur.com/aY1ZPAW.png" alt="Clara"
+           onerror="this.style.display='none'; document.getElementById('avatarRing').textContent='👩‍🏫';">
     </div>
     <div class="header-text">
-      <div class="header-name">Bizcochuela</div>
-      <div class="header-sub">Asistente para familias · Primaria Córdoba · Gratuita 🐾</div>
+      <div class="header-name">Aula Clara</div>
+      <div class="header-sub">Asistente pedagógica · Docentes · Primaria Córdoba</div>
     </div>
     <div class="status-badge online" id="statusBadge">
       <div class="status-dot"></div>
       <span id="statusText">En línea</span>
     </div>
-    <button id="newChatBtn" title="Nueva consulta" onclick="resetChat()"
-      style="width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--warm-white);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s;font-size:15px;color:var(--brown-light);"
-      aria-label="Nueva consulta">↺</button>
+    <button id="newChatBtn" title="Nueva consulta" onclick="resetChat()" style="
+      width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);
+      background:var(--warm-white);cursor:pointer;display:flex;align-items:center;
+      justify-content:center;flex-shrink:0;transition:background 0.15s;
+      font-size:15px;color:var(--brown-light);
+    " aria-label="Nueva consulta">↺</button>
   </header>
 
-  <div class="offline-banner" id="offlineBanner" role="alert">Sin conexión a internet. Revisá tu red.</div>
+  <div class="offline-banner" id="offlineBanner" role="alert">
+    Sin conexión a internet. Revisá tu red para continuar.
+  </div>
+
+  <!-- Barra de progreso Plan Anual -->
+  <div class="plan-progress" id="planProgress">
+    <div class="plan-progress-label" id="planProgressLabel">Plan Anual — Generando período 1 de 3</div>
+    <div class="plan-progress-steps">
+      <div class="plan-step" id="planStep1"></div>
+      <div class="plan-step" id="planStep2"></div>
+      <div class="plan-step" id="planStep3"></div>
+    </div>
+  </div>
 
   <main class="messages" id="messages" role="log" aria-live="polite">
     <div class="msg-row bot">
       <div class="msg-avatar">
-        <img src="https://i.imgur.com/xvR9r3I.jpeg" alt=""
-             onerror="this.style.display='none'; this.parentNode.textContent='🐾';">
+        <img src="https://i.imgur.com/aY1ZPAW.png" alt=""
+             onerror="this.style.display='none'; this.parentNode.textContent='👩‍🏫';">
       </div>
       <div class="bubble-wrap">
         <div class="bubble">
-          <p>¡Hola! Soy <strong>Bizcochuela</strong> 🐾</p>
-          <p>Soy maestra y estoy acá para ayudarte a acompañar a tu hijo/a en la escuela. Tareas, boletines, situaciones difíciles, cómo hablar con la maestra — lo que necesités. ¡Y es gratis!</p>
-          <p>Contame, ¿en qué grado está tu hijo/a y en qué te puedo ayudar hoy?</p>
+          <p>¡Hola! Soy <strong>Clara</strong> 👩‍🏫</p>
+          <p>Soy docente como vos, con 20 años en primaria. Estoy acá para simplificarte la vida. ¿Qué querés armar hoy?</p>
         </div>
       </div>
     </div>
 
     <div class="suggestions" id="suggestions">
-      <button class="chip" onclick="sendSuggestion('Mi hijo no entiende la tarea','tareas')">Ayuda con tareas 📚</button>
-      <button class="chip" onclick="sendSuggestion('No entiendo el boletín','boletin')">Entender el boletín 📋</button>
-      <button class="chip" onclick="sendSuggestion('Tengo un problema con la maestra','escuela')">Hablar con la escuela 🏫</button>
-      <button class="chip" onclick="sendSuggestion('Mi hijo tiene un problema con un compañero','conflicto')">Situación difícil 💙</button>
+      <button class="chip" onclick="setFlow('planificacion_q'); sendSuggestion('Quiero hacer una planificación de clase','Planificación')">Planificación 📝</button>
+      <button class="chip" onclick="setFlow('plan_anual_p0'); sendSuggestion('Quiero hacer el plan anual','Plan Anual')">Plan Anual 📅</button>
+      <button class="chip" onclick="setFlow('boletin'); sendSuggestion('Necesito hacer boletines','Boletines')">Boletines 📋</button>
+      <button class="chip" onclick="setFlow('adaptacion_q'); sendSuggestion('Necesito una adaptación curricular','Adaptación')">Adaptación 🤝</button>
+      <button class="chip" onclick="setFlow('esi_q'); sendSuggestion('Necesito preparar una clase de ESI','ESI')">Clase ESI 🌿</button>
+      <button class="chip" onclick="setFlow('general'); sendSuggestion('Tengo una consulta','Consulta libre')">Consulta libre 💬</button>
     </div>
 
     <div class="typing-row" id="typingRow">
       <div class="msg-avatar">
-        <img src="https://i.imgur.com/xvR9r3I.jpeg" alt=""
-             onerror="this.style.display='none'; this.parentNode.textContent='🐾';">
+        <img src="https://i.imgur.com/aY1ZPAW.png" alt=""
+             onerror="this.style.display='none'; this.parentNode.textContent='👩‍🏫';">
       </div>
-      <div class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="typing-dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </main>
 
   <div class="input-area">
     <div class="input-wrap">
       <textarea id="userInput" placeholder="Escribí tu consulta..."
-        rows="1" maxlength="1500" aria-label="Escribí tu consulta"
+        rows="1" maxlength="2000" aria-label="Escribí tu consulta"
         autocomplete="off" spellcheck="true"></textarea>
       <button class="send-btn" id="sendBtn" aria-label="Enviar" disabled>
         <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -329,663 +666,1164 @@
         </svg>
       </button>
     </div>
-    <div class="input-footer"><span class="char-count" id="charCount" aria-live="polite"></span></div>
-    <div class="disclaimer">Bizcochuela puede cometer errores. Para situaciones urgentes, contactá directamente a la escuela.</div>
+    <div class="input-footer">
+      <span class="char-count" id="charCount" aria-live="polite"></span>
+    </div>
+    <div class="disclaimer">
+      Clara puede cometer errores. Verificá la información importante antes de usar los documentos.
+    </div>
   </div>
 </div>
 
 <script>
 // ── Config ──────────────────────────────────────────────────────
-const WORKER_URL       = 'https://bizcochuela-familias.abfacundotorres.workers.dev';
-const SESSION_ID       = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
-const MAX_CHARS        = 1500;
-const MAX_RETRY        = 2;
-const RETRY_BASE       = 1200;
-const CLIENT_TMOUT     = 33000;
-const HISTORY_LIMIT    = 12;
-const SURVEY_THRESHOLD = 5;
-const SURVEY_TTL_MS    = 7 * 24 * 60 * 60 * 1000; // 7 días
+const WORKER_URL    = 'https://aulaclara.abfacundotorres.workers.dev';
+// DASHBOARD_PIN se valida server-side en el Worker — no necesita estar en el cliente.
+// El frontend lo envía tal como el usuario lo escribe; el Worker decide si es válido.
+let dashboardPin = ''; // se asigna en submitPin cuando el Worker confirma acceso
+const SESSION_ID    = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+// Device ID: permanente por dispositivo, independiente del PIN
+// Permite que distintos docentes en el mismo dispositivo tengan historial separado
+const DEVICE_ID = (() => {
+  try {
+    let id = localStorage.getItem('clara_device_id');
+    if (!id) { id = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('clara_device_id', id); }
+    return id;
+  } catch { return 'anon'; }
+})();
+// STORAGE_KEY incluye DEVICE_ID — historial por dispositivo, no por PIN
+const STORAGE_KEY = 'clara_s_v2_' + DEVICE_ID;
+const MAX_CHARS     = 2000;
+const MAX_RETRY     = 2;
+const RETRY_BASE    = 1200;
+const CLIENT_TMOUT  = 55000;  // 55s: cubre Groq(25s) + fallback Gemini(22s) + overhead RAG
+const HISTORY_LIMIT = 16;
+const RESUME_THRESHOLD = 4; // mensajes mínimos para mostrar botón resumen
+const SURVEY_THRESHOLD  = 5; // mensajes para mostrar botón encuesta
 
-// FIX #1: municipio desde URL param — municipio despliega ?m=JESUSMARIA
-const MUNICIPIO  = new URLSearchParams(location.search).get('m') || 'demo';
-const OB_KEY     = 'bizcochuela_ob_done_v1';
-const SURVEY_KEY = 'bizcochuela_survey_ts';
+// ── State ───────────────────────────────────────────────────────
+let history      = [];
+let isLoading    = false;
+let toastTimer   = null;
+let sessionPin   = null;
+let activeFlow   = 'general';
+let docenteCtx   = { nombre: '', grado: '' };
+let surveyRating = 0;
+let surveyUso    = '';
+let lastDocTitle = '';
+let messageCount = 0;
+let surveyShown  = false;
+let sessionChip  = ''; // chip usado para iniciar la sesión
 
-const OB_SLIDES = [
-  { icon:'🐾', title:'Hola, soy Bizcochuela',      text:'Soy una maestra cordobesa con 20 años de experiencia. Ahora ayudo a las familias a acompañar a sus hijos en la escuela primaria.' },
-  { icon:'📚', title:'Te ayudo con lo que necesités', text:'Tareas difíciles, boletines que no se entienden, cómo hablar con la maestra, situaciones con compañeros. Preguntame sin vueltas.' },
-  { icon:'🆓', title:'Gratis, siempre',              text:'Bizcochuela es un servicio gratuito para las familias del municipio. Sin publicidad, sin datos personales. Solo ayuda.' },
-];
+// Plan Anual state
+const plan = {
+  p0: null, p1: null, p2: null, p3: null,
+  reset() { this.p0=this.p1=this.p2=this.p3=null; $('planProgress').classList.remove('visible'); },
+  complete() { return this.p0&&this.p1&&this.p2&&this.p3; },
+  fullContent() {
+    const strip = t => t
+      .replace(/\[PERIODO_\d\]\s*/g,'')
+      .replace(/\[TITULO\][^\n]*\n?/g,'')
+      .replace(/\[FIN_DOCUMENTO\]/g,'').trim();
+    const title = (this.p0||'').match(/\[TITULO\]\s*(.+)/)?.[1]?.trim() || 'Plan Anual';
+    return `[TITULO] ${title}\n${strip(this.p0||'')}\n${strip(this.p1||'')}\n${strip(this.p2||'')}\n${strip(this.p3||'')}\n[FIN_DOCUMENTO]`;
+  }
+};
 
-// FIX #2: surveyShown con TTL en localStorage
-function isSurveyRecentlyDone() {
-  try { const ts=parseInt(localStorage.getItem(SURVEY_KEY)||'0',10); return ts>0 && (Date.now()-ts)<SURVEY_TTL_MS; }
-  catch { return false; }
-}
-function markSurveyDone() {
-  try { localStorage.setItem(SURVEY_KEY, String(Date.now())); } catch {}
-}
+// ── DOM refs ────────────────────────────────────────────────────
+const $   = id => document.getElementById(id);
+const msg = $('messages');
+const inp = $('userInput');
+const btn = $('sendBtn');
+const sug = $('suggestions');
 
-// FIX #3: inferir chip desde texto libre
-function inferChip(text) {
-  const t = text.toLowerCase();
-  if (/tarea|fracción|suma|resta|división|ejercicio|problema|matemática|lectura|escritura|multiplicación/.test(t)) return 'tareas';
-  if (/boletín|boletin|nota|calificación|en proceso|logrado/.test(t)) return 'boletin';
-  if (/bullying|pelea|maltrato|acoso|conflicto|golpe/.test(t)) return 'conflicto';
-  if (/maestra|directora|reunión|reunion|escuela|colegio/.test(t)) return 'escuela';
-  return 'general';
-}
-
-// ── State ────────────────────────────────────────────────────────
-let history        = [];
-let isLoading      = false;
-let toastTimer     = null;
-let messageCount   = 0;
-let sessionChip    = '';
-let surveySat      = 0;
-let surveyFac      = 0;
-let surveyEncontro = '';
-let obStep         = 0;
-
-const $          = id => document.getElementById(id);
-const messagesEl = $('messages');
-const typingRow  = $('typingRow');
-const inputEl    = $('userInput');
-const sendBtn    = $('sendBtn');
-const suggestEl  = $('suggestions');
-
-// ── Onboarding ───────────────────────────────────────────────────
-function showOnboarding() {
-  obStep = 0; renderObSlide(0);
-  // FIX #12: doble rAF para evitar flash del chat antes del overlay
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    $('onboardingOverlay').classList.add('visible');
-  }));
-}
-function renderObSlide(i) {
-  const s = OB_SLIDES[i];
-  $('obIcon').textContent    = s.icon;
-  $('obTitle').textContent   = s.title;
-  $('obText').textContent    = s.text;
-  $('obNextBtn').textContent = i < OB_SLIDES.length-1 ? 'Siguiente →' : '¡Empezar! 🐾';
-  [0,1,2].forEach(j => { $('obDot'+j).className = 'ob-dot'+(j===i?' active':''); });
-}
-function obNext() {
-  if (obStep < OB_SLIDES.length-1) { obStep++; renderObSlide(obStep); }
-  else closeOnboarding();
-}
-function closeOnboarding() {
-  $('onboardingOverlay').classList.remove('visible');
-  try { localStorage.setItem(OB_KEY,'1'); } catch {}
-  focusInput();
+// ── isDocumentText ──────────────────────────────────────────────
+function isDoc(t) {
+  return t.includes('[TITULO]') || t.includes('[FIN_DOCUMENTO]') || t.includes('[PERIODO_');
 }
 
-// ── Encuesta ─────────────────────────────────────────────────────
-function openSurvey() {
-  $('surveyFloatBtn').classList.remove('visible');
-  surveySat=0; surveyFac=0; surveyEncontro='';
-  document.querySelectorAll('.star').forEach(s => s.classList.remove('active','preview'));
-  document.querySelectorAll('.encontro-btn').forEach(b => b.classList.remove('active'));
-  $('surveyForm').style.display = ''; $('surveyThanks').style.display = 'none';
-  $('surveySubmitBtn').disabled = true; $('surveySubmitBtn').classList.remove('loading');
-  $('surveyModal').classList.add('visible');
-}
-function closeSurvey() { $('surveyModal').classList.remove('visible'); }
-
-// FIX #7: hover preview de estrellas
-function previewStars(type, val) {
-  const rowId = type==='sat' ? 'satRow' : 'facRow';
-  const committed = type==='sat' ? surveySat : surveyFac;
-  document.querySelectorAll(`#${rowId} .star`).forEach(s => {
-    const n = Number(s.dataset.v);
-    s.classList.remove('active','preview');
-    if (val>0) { if(n<=val) s.classList.add('preview'); }
-    else { if(n<=committed) s.classList.add('active'); }
-  });
-}
-function setStar(type, val) {
-  if (type==='sat') surveySat=val; else surveyFac=val;
-  const rowId = type==='sat' ? 'satRow' : 'facRow';
-  document.querySelectorAll(`#${rowId} .star`).forEach(s => {
-    s.classList.remove('active','preview');
-    if (Number(s.dataset.v)<=val) s.classList.add('active');
-  });
-  checkSurveyReady();
-}
-function setEncontro(val) {
-  surveyEncontro=val;
-  document.querySelectorAll('.encontro-btn').forEach(b => b.classList.toggle('active', b.dataset.v===val));
-  checkSurveyReady();
-}
-function checkSurveyReady() {
-  $('surveySubmitBtn').disabled = !(surveySat && surveyFac && surveyEncontro);
-}
-// FIX #15: spinner + fire-and-forget (no bloquea UX si falla la red)
-function submitSurvey() {
-  const btn = $('surveySubmitBtn');
-  btn.disabled=true; btn.classList.add('loading');
-  fetch(WORKER_URL, {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      _survey:true, municipio:MUNICIPIO, chip:sessionChip,
-      satisfaccion:surveySat, facilidad:surveyFac,
-      encontro:surveyEncontro, session_id:SESSION_ID,
-    }),
-  }).catch(()=>{});
-  markSurveyDone(); // FIX #2
-  $('surveyForm').style.display='none'; $('surveyThanks').style.display='block';
-  setTimeout(closeSurvey, 2000);
+// ── Extrae contexto del docente ─────────────────────────────────
+function extractDocenteCtx(userText) {
+  const reserved = ['docente','profe','profesora','profesor','directora','director',
+                    'maestra','maestro','primaria','segundo','tercer','primer'];
+  const nameMatch = userText.match(/(?:me llamo|mi nombre es)\s+([A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]{2,}(?:\s+[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]{2,})?)/i);
+  if (nameMatch) {
+    const candidate = nameMatch[1].trim().toLowerCase();
+    if (!reserved.some(r => candidate.includes(r))) {
+      docenteCtx.nombre = nameMatch[1].trim();
+    }
+  }
+  const gradoMatch = userText.match(/([1-6])[°º](?:\s*grado)?/i);
+  if (gradoMatch && !docenteCtx.grado) {
+    docenteCtx.grado = gradoMatch[0].trim();
+  }
 }
 
-// FIX #13: Escape cierra modales
-document.addEventListener('keydown', e => {
-  if (e.key!=='Escape') return;
-  if ($('surveyModal').classList.contains('visible')) closeSurvey();
-  else if ($('onboardingOverlay').classList.contains('visible')) closeOnboarding();
-});
+// ── Plan progress bar ───────────────────────────────────────────
+function updateProgress(step) {
+  $('planProgress').classList.add('visible');
+  const s1 = $('planStep1'), s2 = $('planStep2'), s3 = $('planStep3');
+  s1.className = 'plan-step' + (step > 1 ? ' done' : step === 1 ? ' done' : step === 0 ? ' current' : '');
+  s2.className = 'plan-step' + (step > 2 ? ' done' : step === 2 ? ' done' : step === 1 ? ' current' : '');
+  s3.className = 'plan-step' + (step >= 3 ? ' done'    : step === 2 ? ' current' : '');
+  $('planProgressLabel').textContent =
+    step >= 3 ? '¡Plan Anual completo — listo para descargar! ✅' :
+    step === 0 ? 'Plan Anual — Introducción lista. Generando período 1…' :
+    step === 1 ? 'Plan Anual — Período 1 listo. Generando período 2…' :
+                 'Plan Anual — Período 2 listo. Generando período 3…';
+}
 
-// ── Render texto ─────────────────────────────────────────────────
-function escapeHTML(s) {
+// ── Text rendering ──────────────────────────────────────────────
+function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
           .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
-function applyInline(s) {
+function inline(s) {
   return s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
           .replace(/\*([^*]+)\*/g,'<em>$1</em>')
           .replace(/_([^_]+)_/g,'<em>$1</em>');
 }
-function formatText(raw) {
-  const lines=raw.split('\n'), result=[]; let inUl=false,inOl=false,buf=[];
-  const flush=()=>{ if(buf.length){ result.push(`<p>${buf.join('<br>')}</p>`); buf=[]; } };
+function renderText(raw) {
+  const cleaned = raw
+    .replace(/\[PERIODO_\d\]\s*/g,'')
+    .replace(/\[TITULO\]\s*/g,'')
+    .replace(/\[SECCION\]\s*/g,'### ')
+    .replace(/\[SUBSECCION\]\s*/g,'#### ')
+    .replace(/\[CAMPO\]\s*/g,'')
+    .replace(/\[TEXTO\]\s*/g,'')
+    .replace(/\[LISTA\]\s*/g,'• ')
+    .replace(/\[SEPARADOR\]/g,'\n---\n')
+    .replace(/\[FIN_DOCUMENTO\]/g,'');
+
+  const lines = cleaned.split('\n');
+  const out = []; let ul=false, ol=false, buf=[];
+
+  const flush = () => { if (buf.length) { out.push(`<p>${buf.join('<br>')}</p>`); buf=[]; } };
+
   for (const line of lines) {
-    const t=line.trim(), e=escapeHTML(t);
-    if(t==='---'){ flush(); if(inUl){result.push('</ul>');inUl=false;} if(inOl){result.push('</ol>');inOl=false;} result.push('<hr>'); continue; }
-    if(t.startsWith('### ')){ flush(); if(inUl){result.push('</ul>');inUl=false;} if(inOl){result.push('</ol>');inOl=false;} result.push(`<p><strong style="color:var(--orange)">${applyInline(escapeHTML(t.slice(4)))}</strong></p>`); continue; }
-    const ulm=e.match(/^[•\-]\s+(.+)/), olm=e.match(/^\d+\.\s+(.+)/);
-    if(ulm){ flush(); if(!inUl){if(inOl){result.push('</ol>');inOl=false;} result.push('<ul>');inUl=true;} result.push(`<li>${applyInline(ulm[1])}</li>`); }
-    else if(olm){ flush(); if(!inOl){if(inUl){result.push('</ul>');inUl=false;} result.push('<ol>');inOl=true;} result.push(`<li>${applyInline(olm[1])}</li>`); }
-    else{ if(inUl){result.push('</ul>');inUl=false;} if(inOl){result.push('</ol>');inOl=false;} if(e==='') flush(); else buf.push(applyInline(e)); }
+    const t = line.trim(), e = esc(t);
+    if (t === '---') {
+      flush(); if(ul){out.push('</ul>');ul=false;} if(ol){out.push('</ol>');ol=false;}
+      out.push('<hr>'); continue;
+    }
+    if (t.startsWith('### ')) {
+      flush(); if(ul){out.push('</ul>');ul=false;} if(ol){out.push('</ol>');ol=false;}
+      out.push(`<p><strong style="color:var(--orange)">${inline(esc(t.slice(4)))}</strong></p>`); continue;
+    }
+    if (t.startsWith('#### ')) {
+      flush();
+      out.push(`<p><strong style="color:var(--brown-mid)">${inline(esc(t.slice(5)))}</strong></p>`); continue;
+    }
+    const ul_m = e.match(/^•\s+(.+)/);
+    const ol_m = e.match(/^\d+\.\s+(.+)/);
+    if (ul_m) {
+      flush(); if(!ul){if(ol){out.push('</ol>');ol=false;}out.push('<ul>');ul=true;}
+      out.push(`<li>${inline(ul_m[1])}</li>`);
+    } else if (ol_m) {
+      flush(); if(!ol){if(ul){out.push('</ul>');ul=false;}out.push('<ol>');ol=true;}
+      out.push(`<li>${inline(ol_m[1])}</li>`);
+    } else {
+      if(ul){out.push('</ul>');ul=false;} if(ol){out.push('</ol>');ol=false;}
+      if (e==='') flush(); else buf.push(inline(e));
+    }
   }
-  flush(); if(inUl)result.push('</ul>'); if(inOl)result.push('</ol>');
-  return result.join('');
+  flush(); if(ul)out.push('</ul>'); if(ol)out.push('</ol>');
+  return out.join('');
 }
 
-// ── Mensajes ─────────────────────────────────────────────────────
-function scrollBottom() { messagesEl.scrollTo({top:messagesEl.scrollHeight,behavior:'smooth'}); }
-function appendMessage(text, who) {
-  const row=document.createElement('div'); row.className=`msg-row ${who}`;
-  const av=document.createElement('div'); av.className='msg-avatar';
-  if(who==='bot') av.innerHTML=`<img src="https://i.imgur.com/xvR9r3I.jpeg" alt="" onerror="this.style.display='none';this.parentNode.textContent='🐾'">`;
-  else av.textContent='👤';
-  const wrap=document.createElement('div'); wrap.className='bubble-wrap';
-  const bubble=document.createElement('div'); bubble.className='bubble';
-  bubble.innerHTML=who==='bot'?formatText(text):`<p>${escapeHTML(text)}</p>`;
-  wrap.appendChild(bubble); row.appendChild(av); row.appendChild(wrap);
-  messagesEl.insertBefore(row,typingRow); scrollBottom();
+// ── Word generation ─────────────────────────────────────────────
+function parseDoc(raw) {
+  const norm = raw
+    .replace(/\[PERIODO_\d\]\s*/g,'')
+    .replace(/^(\s*)[-•]\s+/gm,'$1[LISTA] ');
+  const docs=[]; let doc=null, sec=null, sub=null, last=null;
+  for (const line of norm.split('\n')) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t==='[FIN_DOCUMENTO]'||t==='[SEPARADOR]') {
+      if(doc)docs.push(doc); doc=sec=sub=last=null;
+    } else if (t.startsWith('[TITULO]')) {
+      const title=t.replace('[TITULO]','').trim();
+      if(title){doc={titulo:title,sections:[]}; sec=sub=null;}
+    } else if (t.startsWith('[SECCION]')&&doc) {
+      sub=null; const title=t.replace('[SECCION]','').trim();
+      if(title){sec={title,items:[]}; doc.sections.push(sec);}
+    } else if (t.startsWith('[SUBSECCION]')&&sec) {
+      const title=t.replace('[SUBSECCION]','').trim();
+      if(title){sub={title,items:[]}; sec.items.push({type:'subsection',data:sub});}
+    } else if (t.startsWith('[CAMPO]')) {
+      const tx=t.replace('[CAMPO]','').trim(); const tgt=sub||sec;
+      if(tgt&&tx)tgt.items.push({type:'field',text:tx}); last=tx?null:'campo';
+    } else if (t.startsWith('[TEXTO]')) {
+      const tx=t.replace('[TEXTO]','').trim(); const tgt=sub||sec;
+      if(tgt&&tx)tgt.items.push({type:'text',text:tx}); last=tx?null:'texto';
+    } else if (t.startsWith('[LISTA]')) {
+      const tx=t.replace('[LISTA]','').trim(); const tgt=sub||sec;
+      if(tgt&&tx)tgt.items.push({type:'bullet',text:tx}); last=tx?null:'lista';
+    } else if (last&&doc) {
+      const tgt=sub||sec;
+      if(tgt&&t&&!t.startsWith('[')) {
+        tgt.items.push({type:{lista:'bullet',texto:'text',campo:'field'}[last]||'text',text:t});
+      }
+      last=null;
+    }
+  }
+  if(doc)docs.push(doc);
+  return docs;
 }
-function showTyping(){ typingRow.classList.add('visible'); scrollBottom(); }
-function hideTyping(){ typingRow.classList.remove('visible'); }
-function setStatus(online){
+
+function makeFilename(raw) {
+  const m = raw.match(/\[TITULO\]\s*(.+)/);
+  return ((m?m[1].trim():'aulaclara')
+    .toLowerCase()
+    .replace(/[áä]/g,'a').replace(/[éë]/g,'e').replace(/[íï]/g,'i')
+    .replace(/[óö]/g,'o').replace(/[úü]/g,'u').replace(/ñ/g,'n')
+    .replace(/[^\w\s-]/g,'').replace(/\s+/g,'_').slice(0,60)) + '.docx';
+}
+
+async function generateWord(rawContent) {
+  if (window._docxError) throw new Error('Librería Word no disponible. Recargá la página.');
+  if (!window._docxReady) throw new Error('Librería Word cargando. Esperá unos segundos.');
+  const {Document,Packer,Paragraph,TextRun,HeadingLevel,AlignmentType,LevelFormat,BorderStyle,PageBreak} = window.docx;
+  const docs = parseDoc(rawContent.replace(/\[PERIODO_\d\]\s*/g,''));
+  if (!docs.length) throw new Error('Sin contenido para generar.');
+
+  const numbering = { config:[{reference:'bullets',levels:[{level:0,format:LevelFormat.BULLET,text:'•',alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:720,hanging:360}}}}]}] };
+  const children = [];
+
+  const pushItem = (item) => {
+    if (item.type==='subsection') {
+      children.push(new Paragraph({heading:HeadingLevel.HEADING_3,children:[new TextRun({text:item.data.title,bold:true,size:23,font:'Arial',color:'7A3B10'})],spacing:{before:180,after:80}}));
+      item.data.items.forEach(pushItem);
+    } else if (item.type==='field') {
+      const p=item.text.split(':');
+      children.push(new Paragraph({children:[new TextRun({text:(p[0]||'')+': ',bold:true,size:22,font:'Arial'}),new TextRun({text:p.slice(1).join(':').trim(),size:22,font:'Arial'})],spacing:{after:80}}));
+    } else if (item.type==='text') {
+      children.push(new Paragraph({children:[new TextRun({text:item.text,size:22,font:'Arial'})],spacing:{after:120}}));
+    } else if (item.type==='bullet') {
+      children.push(new Paragraph({numbering:{reference:'bullets',level:0},children:[new TextRun({text:item.text,size:22,font:'Arial'})],spacing:{after:80}}));
+    }
+  };
+
+  docs.forEach((d,i) => {
+    if(i>0)children.push(new Paragraph({children:[new PageBreak()]}));
+    children.push(new Paragraph({heading:HeadingLevel.HEADING_1,children:[new TextRun({text:d.titulo,bold:true,size:34,font:'Arial'})],spacing:{after:200}}));
+    children.push(new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:8,color:'D95F1A',space:1}},spacing:{after:160},children:[]}));
+    children.push(new Paragraph({children:[new TextRun({text:`Generado por Aula Clara · ${new Date().toLocaleDateString('es-AR')}`,size:18,color:'C47A3A',font:'Arial',italics:true})],spacing:{after:320}}));
+    d.sections.forEach(sec => {
+      children.push(new Paragraph({heading:HeadingLevel.HEADING_2,children:[new TextRun({text:sec.title,bold:true,size:26,font:'Arial',color:'D95F1A'})],spacing:{before:320,after:100}}));
+      sec.items.forEach(pushItem);
+    });
+    children.push(new Paragraph({spacing:{before:480},children:[]}));
+    children.push(new Paragraph({border:{top:{style:BorderStyle.SINGLE,size:4,color:'EDD5B0',space:1}},spacing:{after:100},children:[]}));
+    children.push(new Paragraph({children:[new TextRun({text:'Observaciones:',size:20,bold:true,font:'Arial',color:'C47A3A'})],spacing:{after:160}}));
+    for(let i=0;i<3;i++) children.push(new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:2,color:'EDD5B0',space:1}},spacing:{after:240},children:[new TextRun({text:' ',size:22})]}));
+  });
+
+  const doc = new Document({
+    numbering,
+    styles:{
+      default:{document:{run:{font:'Arial',size:22}}},
+      paragraphStyles:[
+        {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',quickFormat:true,run:{size:34,bold:true,font:'Arial',color:'3D1F0A'},paragraph:{spacing:{before:0,after:200},outlineLevel:0}},
+        {id:'Heading2',name:'Heading 2',basedOn:'Normal',next:'Normal',quickFormat:true,run:{size:26,bold:true,font:'Arial',color:'D95F1A'},paragraph:{spacing:{before:320,after:100},outlineLevel:1}},
+        {id:'Heading3',name:'Heading 3',basedOn:'Normal',next:'Normal',quickFormat:true,run:{size:23,bold:true,font:'Arial',color:'7A3B10'},paragraph:{spacing:{before:180,after:80},outlineLevel:2}},
+      ]
+    },
+    sections:[{
+      properties:{page:{size:{width:11906,height:16838},margin:{top:1440,right:1440,bottom:1440,left:1440}}},
+      children
+    }]
+  });
+
+  const blob = await Packer.toBlob(doc);
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'),{href:url,download:makeFilename(rawContent)});
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
+
+// ── PDF generation ─────────────────────────────────────────────
+function generatePDF(rawContent) {
+  const docs = parseDoc(rawContent.replace(/\[PERIODO_\d\]\s*/g,''));
+  if (!docs.length) throw new Error('Sin contenido para generar.');
+
+  const titleMatch = rawContent.match(/\[TITULO\]\s*([^\n]+)/);
+  const title = titleMatch ? titleMatch[1].trim() : 'Aula Clara';
+  const escH = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  let html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>${escH(title)}</title>
+<style>
+  @page { margin: 2cm; }
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  body { font-family: Arial, sans-serif; font-size: 11pt; color: #3D1F0A; line-height: 1.6; }
+  h1 { font-size: 16pt; color: #3D1F0A; border-bottom: 2px solid #D95F1A; padding-bottom: 6px; margin-bottom: 4px; }
+  .generated { font-size: 9pt; color: #C47A3A; font-style: italic; margin-bottom: 24px; }
+  h2 { font-size: 12pt; color: #D95F1A; margin-top: 18px; margin-bottom: 6px; border-left: 3px solid #D95F1A; padding-left: 8px; }
+  h3 { font-size: 11pt; color: #7A3B10; margin-top: 12px; margin-bottom: 4px; }
+  .field { margin: 4px 0; } .field strong { color: #3D1F0A; }
+  p { margin: 4px 0 8px; }
+  ul { margin: 4px 0 8px; padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  .obs { margin-top: 32px; border-top: 1px solid #EDD5B0; padding-top: 12px; }
+  .obs-label { font-weight: bold; color: #C47A3A; font-size: 10pt; margin-bottom: 8px; }
+  .obs-line { border-bottom: 1px solid #EDD5B0; height: 20px; margin-bottom: 8px; }
+  .footer { margin-top: 24px; font-size: 8pt; color: #C47A3A; text-align: center; border-top: 1px solid #EDD5B0; padding-top: 8px; }
+</style></head><body>`;
+
+  const renderItem = (item) => {
+    if (item.type === 'subsection') {
+      html += `<h3>${escH(item.data.title)}</h3>`;
+      item.data.items.forEach(renderItem);
+    } else if (item.type === 'field') {
+      const p = item.text.split(':');
+      html += `<p class="field"><strong>${escH(p[0])}:</strong> ${escH(p.slice(1).join(':').trim())}</p>`;
+    } else if (item.type === 'text') {
+      html += `<p>${escH(item.text)}</p>`;
+    } else if (item.type === 'bullet') {
+      html += `<li>${escH(item.text)}</li>`;
+    }
+  };
+
+  docs.forEach((d, i) => {
+    if (i > 0) html += '<div style="page-break-before:always"></div>';
+    html += `<h1>${escH(d.titulo)}</h1>`;
+    html += `<div class="generated">Generado por Aula Clara · ${new Date().toLocaleDateString('es-AR')}</div>`;
+    d.sections.forEach(sec => {
+      html += `<h2>${escH(sec.title)}</h2>`;
+      let inList = false;
+      sec.items.forEach(item => {
+        if (item.type === 'bullet' && !inList) { html += '<ul>'; inList = true; }
+        if (item.type !== 'bullet' && inList) { html += '</ul>'; inList = false; }
+        renderItem(item);
+      });
+      if (inList) html += '</ul>';
+    });
+    html += `<div class="obs"><div class="obs-label">Observaciones:</div>
+      <div class="obs-line"></div><div class="obs-line"></div><div class="obs-line"></div></div>`;
+  });
+  html += `<div class="footer">Aula Clara · aulaclara.com.ar</div></body></html>`;
+
+  // Estrategia de impresión/descarga:
+  // 1. Intentar window.open (desktop Chrome/Firefox)
+  // 2. Si falla o está en mobile, descargar como .html con instrucción de abrir e imprimir
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const blobUrl = URL.createObjectURL(blob);
+
+  // Detectar mobile: en iOS/Android el popup suele estar bloqueado y print() no funciona bien
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    const w = window.open(blobUrl, '_blank');
+    if (w) {
+      // Desktop: abrir en pestaña y disparar print dialog
+      w.addEventListener('load', () => { w.print(); });
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+      return;
+    }
+  }
+
+  // Fallback mobile / popup bloqueado:
+  // Descargar el HTML — el docente lo abre y usa "Compartir → Imprimir" del browser
+  const filename = (title.toLowerCase()
+    .replace(/[áä]/g,'a').replace(/[éë]/g,'e').replace(/[íï]/g,'i')
+    .replace(/[óö]/g,'o').replace(/[úü]/g,'u').replace(/ñ/g,'n')
+    .replace(/[^\w\s-]/g,'').replace(/\s+/g,'_').slice(0,50)) + '.html';
+  const a = Object.assign(document.createElement('a'), { href: blobUrl, download: filename });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+  showToast('Archivo descargado — abrilo y usá "Imprimir" para generar el PDF', 5000);
+}
+
+// ── Encuesta ────────────────────────────────────────────────────
+function setStar(n) {
+  surveyRating = n;
+  document.querySelectorAll('.star').forEach((s,i) => s.classList.toggle('active', i < n));
+  $('surveySubmitBtn').disabled = false;
+}
+
+function setUso(v) {
+  surveyUso = v;
+  document.querySelectorAll('.uso-btn').forEach(b => b.classList.toggle('active', b.dataset.v === v));
+}
+
+function openModal(docTitle) {
+  lastDocTitle = docTitle || '';
+  $('surveyFloatBtn').classList.remove('visible');
+  surveyRating = 0; surveyUso = '';
+  document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.uso-btn').forEach(b => b.classList.remove('active'));
+  $('surveySubmitBtn').disabled = true;
+  $('surveyForm').style.display = 'block';
+  $('surveyThanks').style.display = 'none';
+  $('surveyModal').classList.add('visible');
+}
+
+function closeModal() {
+  $('surveyModal').classList.remove('visible');
+  // Fix 9: solo re-mostrar si el docente NO envió la encuesta y no la vio antes
+  // surveyShown se setea true solo al enviar — omitir no cuenta como "visto"
+  if (!surveyShown && messageCount >= SURVEY_THRESHOLD) {
+    setTimeout(() => {
+      if (!surveyShown) {  // re-check en el timeout por si envió mientras tanto
+        $('surveyFloatBtn').style.display = '';
+        $('surveyFloatBtn').classList.add('visible');
+      }
+    }, 4000);
+  }
+}
+
+async function submitSurvey() {
+  const sbtn = $('surveySubmitBtn');
+  sbtn.disabled = true; sbtn.textContent = 'Enviando…';
+  try {
+    await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        _survey:    true,
+        tipo:       'encuesta',
+        timestamp:  new Date().toISOString(),
+        session_id: SESSION_ID,
+        municipio:  sessionPin  || 'demo',
+        flow:       activeFlow,
+        chip_usado: sessionChip || activeFlow,
+        documento:  lastDocTitle,
+        utilidad:   surveyRating,
+        tiempo:     $('surveyTiempo').value,
+        uso:        surveyUso,
+      }),
+    });
+  } catch { /* silencioso */ }
+  surveyShown = true;
+  $('surveyFloatBtn').classList.remove('visible');
+  $('surveyFloatBtn').style.display = 'none';
+  $('surveyForm').style.display = 'none';
+  $('surveyThanks').style.display = 'block';
+  setTimeout(closeModal, 2200);
+}
+
+// ── Botón resumen ───────────────────────────────────────────────
+function updateResumeBtn() {
+  // No mostrar el botón Resumen mientras se está generando el propio resumen
+  const showResume = messageCount >= RESUME_THRESHOLD && !isLoading && activeFlow !== 'resumen';
+  const showSurvey = messageCount >= SURVEY_THRESHOLD && !surveyShown && !isLoading;
+  $('resumeBtn').classList.toggle('visible', showResume);
+  if (showSurvey) $('surveyFloatBtn').classList.add('visible');
+}
+
+async function triggerResumen() {
+  if(isLoading) return;
+  const prevFlow = activeFlow;
+  activeFlow = 'resumen';
+  // sendMessage es async — esperamos a que termine antes de restaurar el flow
+  // para que historyPayload y logEvent vean 'resumen', no el flow anterior
+  try {
+    await sendMessage('Generá un resumen de esta consulta');
+  } finally {
+    activeFlow = prevFlow;
+  }
+}
+
+// ── Download buttons ────────────────────────────────────────────
+function logDownload(docTitle) {
+  // Fix 10: fire-and-forget con catch explícito — no bloquea UI
+  fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _survey: false, tipo: 'evento',
+      timestamp: new Date().toISOString(),
+      session_id: SESSION_ID, municipio: sessionPin || 'demo',
+      flow: activeFlow, chip_usado: sessionChip || '',
+      documento: docTitle,  // Fix 7: campo alineado con AppScript (documento, no doc_descargado)
+    }),
+  }).catch(() => {}); // silencioso — no crítico
+  if (!surveyShown) setTimeout(() => openModal(docTitle), 800);
+}
+
+function makeDownloadBtn(content, label='⬇️ Word', cls='download') {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;gap:5px;flex-wrap:wrap;';
+
+  const titleMatch = content.match(/\[TITULO\]\s*([^\n]+)/);
+  const docTitle = titleMatch ? titleMatch[1].trim() : 'documento';
+
+  // Fix 3: cls se aplica a ambos botones (download-full para Plan Anual completo)
+  const isSpecial = cls === 'download-full';
+  const btnStyle  = isSpecial ? 'background:var(--green);border-color:var(--green);' : '';
+  const pdfStyle  = isSpecial ? 'background:#2d6624;border-color:#2d6624;' : 'background:#5B6C3A;border-color:#5B6C3A;';
+
+  // Botón Word
+  const bw = document.createElement('button');
+  bw.className = `action-btn ${cls}`;
+  if (btnStyle) bw.style.cssText = btnStyle;
+  bw.innerHTML = label;
+  bw.onclick = async () => {
+    if (window._docxError) { showToast('Librería Word no disponible.'); return; }
+    bw.innerHTML = '⏳...'; bw.disabled = true;
+    try {
+      await generateWord(content);
+      bw.innerHTML = '✅ Word';
+      setTimeout(() => { bw.innerHTML = label; bw.disabled = false; }, 3000);
+      logDownload(docTitle);
+    } catch(e) {
+      bw.innerHTML = '❌'; bw.disabled = false;
+      showToast(e.message || 'Error al generar Word.');
+    }
+  };
+
+  // Botón PDF — Fix 4: filename no se usa en generatePDF (la función abre ventana)
+  const bp = document.createElement('button');
+  bp.className = 'action-btn download';
+  bp.style.cssText = pdfStyle;
+  bp.innerHTML = '📄 PDF';
+  bp.onclick = () => {
+    bp.innerHTML = '⏳...'; bp.disabled = true;
+    try {
+      generatePDF(content);
+      bp.innerHTML = '✅ PDF';
+      setTimeout(() => { bp.innerHTML = '📄 PDF'; bp.disabled = false; }, 3000);
+      logDownload(docTitle);
+    } catch(e) {
+      bp.innerHTML = '❌'; bp.disabled = false;
+      showToast(e.message || 'Error al generar PDF.');
+    }
+  };
+
+  wrap.appendChild(bw);
+  wrap.appendChild(bp);
+  return wrap;
+}
+
+// ── appendMessage ───────────────────────────────────────────────
+// appendMessageSafe: alias sin side-effects para restaurar historial
+function appendMessageSafe(text, role) { appendMessage(text, role, true); }
+
+function appendMessage(text, role, noSideEffects = false) {
+  // Plan Anual accumulation + flow advance — suprimido durante restauración
+  if (role==='bot' && !noSideEffects) {
+    if (text.includes('[PERIODO_0]')) {
+      plan.p0=text; updateProgress(0); activeFlow='plan_anual_p1';
+      // planNext: espera al next microtask para que appendMessage termine antes
+      // de iniciar el siguiente sendMessage — evita race condition con isLoading
+      Promise.resolve().then(() => { if (!isLoading) sendMessage('Generá el período 1'); });
+    }
+    if (text.includes('[PERIODO_1]')) {
+      plan.p1=text; updateProgress(1); activeFlow='plan_anual_p2';
+      Promise.resolve().then(() => { if (!isLoading) sendMessage('Generá el período 2'); });
+    }
+    if (text.includes('[PERIODO_2]')) {
+      plan.p2=text; updateProgress(2); activeFlow='plan_anual_p3';
+      Promise.resolve().then(() => { if (!isLoading) sendMessage('Generá el período 3'); });
+    }
+    if (text.includes('[PERIODO_3]')) { plan.p3=text; updateProgress(3); }
+    if (activeFlow === 'adaptacion_q' && text.includes('Generando la adaptación ahora')) {
+      activeFlow = 'adaptacion';
+    }
+    if (activeFlow === 'planificacion_q' && text.includes('Generando la planificación ahora')) {
+      activeFlow = 'planificacion';
+    }
+  }
+
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+
+  const av = document.createElement('div');
+  av.className = 'msg-avatar';
+  if (role==='bot') {
+    av.innerHTML = `<img src="https://i.imgur.com/aY1ZPAW.png" alt="" onerror="this.style.display=\'none\';this.parentNode.textContent=\'👩\u200d🏫\';">`;
+  } else {
+    av.innerHTML = `<svg style="width:20px;height:20px;fill:#C47A3A" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4z"/></svg>`;
+  }
+
+  const wrap   = document.createElement('div');
+  wrap.className = 'bubble-wrap';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = renderText(text);
+  wrap.appendChild(bubble);
+
+  if (role==='bot') {
+    const acts = document.createElement('div');
+    acts.className = 'bubble-actions';
+
+    const cp = document.createElement('button');
+    cp.className='action-btn'; cp.innerHTML='📋 Copiar';
+    cp.onclick = () => {
+      const plain = text
+        .replace(/\[TITULO\]\s*/g,'').replace(/\[SECCION\]\s*/g,'')
+        .replace(/\[SUBSECCION\]\s*/g,'').replace(/\[CAMPO\]\s*/g,'')
+        .replace(/\[TEXTO\]\s*/g,'').replace(/\[LISTA\]\s*/g,'• ')
+        .replace(/\[FIN_DOCUMENTO\]/g,'').replace(/\[PERIODO_\d\]\s*/g,'')
+        .replace(/\[SEPARADOR\]/g,'\n---\n').trim();
+      const doFallback = () => {
+        // Fallback para Android sin clipboard API o contextos HTTP
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = plain;
+          ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+          document.body.appendChild(ta);
+          ta.focus(); ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          if (ok) { cp.innerHTML='✅ Copiado'; setTimeout(()=>{cp.innerHTML='📋 Copiar';},2000); }
+          else showToast('No se pudo copiar — seleccioná el texto manualmente');
+        } catch { showToast('No se pudo copiar — seleccioná el texto manualmente'); }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(plain)
+          .then(()=>{ cp.innerHTML='✅ Copiado'; setTimeout(()=>{cp.innerHTML='📋 Copiar';},2000); })
+          .catch(doFallback);
+      } else {
+        doFallback();
+      }
+    };
+    acts.appendChild(cp);
+
+    const hasFin = text.includes('[FIN_DOCUMENTO]');
+    const isP0   = text.includes('[PERIODO_0]');
+    const isP1   = text.includes('[PERIODO_1]');
+    const isP2   = text.includes('[PERIODO_2]');
+    const isP3   = text.includes('[PERIODO_3]');
+    const isPlan = isP0||isP1||isP2||isP3;
+
+    if (hasFin && (isP1||isP2||isP3)) {
+      const num = isP1?1:isP2?2:3;
+      acts.appendChild(makeDownloadBtn(text,`⬇️ Período ${num}`));
+    }
+    if (isP3 && plan.complete()) {
+      acts.appendChild(makeDownloadBtn(plan.fullContent(),'⬇️ Plan Anual completo','download-full'));
+    }
+    if (hasFin && !isPlan) {
+      acts.appendChild(makeDownloadBtn(text));
+    }
+
+    wrap.appendChild(acts);
+  }
+
+  row.appendChild(av); row.appendChild(wrap);
+  msg.insertBefore(row, $('typingRow'));
+  requestAnimationFrame(()=>{ msg.scrollTop=msg.scrollHeight; });
+}
+
+// ── History payload ─────────────────────────────────────────────
+function historyPayload() {
+  return history.slice(-HISTORY_LIMIT).map(t => {
+    const text = t.parts[0].text;
+    let truncated;
+    if (isDoc(text)) {
+      const pm = text.match(/\[PERIODO_(\d)\]/);
+      const tm = text.match(/\[TITULO\]\s*([^\n]+)/);
+      const p  = pm ? `[PERIODO_${pm[1]}]` : '';
+      const tt = tm ? tm[1].trim() : 'documento';
+      truncated = `${p}[TITULO] ${tt}`;
+    } else {
+      truncated = t.role==='user'
+        ? text.slice(0,1000)
+        : text.replace(/\[TITULO\][\s\S]*$/,'').trim().slice(0,800);
+    }
+    return { role:t.role, parts:[{text:truncated}] };
+  });
+}
+
+// ── Fetch ───────────────────────────────────────────────────────
+async function fetchMsg(message, attempt=0) {
+  const ctrl   = new AbortController();
+  const tmout  = setTimeout(()=>ctrl.abort(), CLIENT_TMOUT);
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        message,
+        history:    historyPayload(),
+        pin:        sessionPin,
+        flow:       activeFlow,
+        ctx:        docenteCtx,
+        chip_usado: sessionChip,
+        session_id: SESSION_ID,
+      }),
+      signal: ctrl.signal,
+    });
+    if (res.status===429) throw Object.assign(new Error('rate_limit'),{fatal:true});
+    if (res.status>=400&&res.status<500) throw Object.assign(new Error(`http_${res.status}`),{fatal:true});
+    if (!res.ok) throw new Error(`http_${res.status}`);
+    const data = await res.json();
+    if (data.error) throw Object.assign(new Error(data.error),{fatal:true});
+    if (!data.reply) throw new Error('empty');
+    if (data.flow) activeFlow = data.flow;
+    return data.reply;
+  } catch(err) {
+    if (err.fatal) throw err;
+    if (!navigator.onLine) throw Object.assign(new Error('offline'),{fatal:true});
+    // Retry silencioso en timeout o error 5xx
+    if (attempt < MAX_RETRY && (err.name==='AbortError' || err.message?.startsWith('http_5') || err.message==='fetch_failed')) {
+      if (attempt > 0) showToast(`Reintentando… (${attempt+1}/${MAX_RETRY})`);
+      await new Promise(r=>setTimeout(r, RETRY_BASE * Math.pow(2, attempt)));
+      return fetchMsg(message, attempt+1);
+    }
+    throw err;
+  } finally {
+    // Siempre limpiar el timer — evita abort fantasma si la próxima request
+    // reutiliza el mismo ctrl antes de que este timeout venza
+    clearTimeout(tmout);
+  }
+}
+
+// ── sendMessage ─────────────────────────────────────────────────
+async function sendMessage(text) {
+  if (!text.trim()||isLoading) return;
+  isLoading=true; btn.disabled=true; setChips(true);
+  $('resumeBtn').classList.remove('visible');
+  appendMessage(text,'user');
+  $('typingRow').classList.add('visible');
+  requestAnimationFrame(() => { msg.scrollTop = msg.scrollHeight; });
+
+  let loadTimer = null;
+  if (activeFlow.startsWith('plan_anual')) loadTimer=setTimeout(()=>showToast('Clara está armando el plan… puede tardar hasta 30s ☕',40000),1000);
+  else if (activeFlow==='boletin')         loadTimer=setTimeout(()=>showToast('Clara está redactando el informe…',20000),1000);
+  else if (activeFlow==='adaptacion')      loadTimer=setTimeout(()=>showToast('Clara está preparando la adaptación… puede tardar hasta 40s ☕',50000),1000);
+  else if (activeFlow==='planificacion')   loadTimer=setTimeout(()=>showToast('Clara está armando la planificación…',20000),1000);
+
+  extractDocenteCtx(text);
+  const pending = {role:'user',parts:[{text}]};
+  try {
+    const reply = await fetchMsg(text);
+    $('typingRow').classList.remove('visible');
+    $('toast').classList.remove('show');
+    appendMessage(reply,'bot');
+    history.push(pending);
+    history.push({role:'model',parts:[{text:reply}]});
+    if (history.length>HISTORY_LIMIT*2) history=history.slice(-HISTORY_LIMIT*2);
+    messageCount++;
+    updateResumeBtn();
+    saveSession();
+  } catch(err) {
+    $('typingRow').classList.remove('visible');
+    const msgs = {
+      rate_limit: 'Demasiadas consultas seguidas. Esperá un minuto.',
+      offline:    'Sin conexión a internet. Revisá tu red.',
+    };
+    const errText = msgs[err.message]
+      || (err.name==='AbortError' ? 'Clara tardó demasiado en responder. El servicio tiene mucha demanda — intentá de nuevo en un momento.' : err.message?.length<120 ? err.message : 'Problema técnico. Intentá de nuevo en un momento.');
+    appendMessage(errText, 'bot');
+  } finally {
+    if(loadTimer)clearTimeout(loadTimer);
+    isLoading=false; btn.disabled=inp.value.trim().length===0; setChips(false);
+    updateResumeBtn(); focusInput();
+  }
+}
+
+// ── UI helpers ──────────────────────────────────────────────────
+function showToast(text, dur=3500) {
+  clearTimeout(toastTimer);
+  const t=$('toast'); t.textContent=text; t.classList.add('show');
+  toastTimer=setTimeout(()=>t.classList.remove('show'),dur);
+}
+
+function setChips(disabled) {
+  sug?.querySelectorAll('.chip').forEach(c=>{c.disabled=disabled;});
+}
+
+function autoResize() {
+  inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,110)+'px';
+}
+
+function updateChar() {
+  const left=MAX_CHARS-inp.value.length;
+  const el=$('charCount');
+  el.textContent=left>300?'':`${left} caracteres restantes`;
+  el.className='char-count'+(left<=300?left<50?' limit':' warn':'');
+  btn.disabled=inp.value.trim().length===0||isLoading;
+}
+
+function setStatus(online) {
   $('statusBadge').className=`status-badge ${online?'online':'offline'}`;
   $('statusText').textContent=online?'En línea':'Sin conexión';
   $('offlineBanner').classList.toggle('visible',!online);
 }
-function showToast(msg,dur=3000){
-  const t=$('toast'); t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),dur);
-}
-function setChipsDisabled(v){ suggestEl?.querySelectorAll('.chip').forEach(c=>{c.disabled=v;}); }
-function focusInput(){ if(window.innerWidth>900) inputEl.focus(); }
-function autoResize(){ inputEl.style.height='auto'; inputEl.style.height=Math.min(inputEl.scrollHeight,110)+'px'; }
-function updateCharCount(){
-  const n=inputEl.value.length, el=$('charCount');
-  el.textContent=n>MAX_CHARS*0.7?`${n}/${MAX_CHARS}`:'';
-  el.className='char-count'+(n>=MAX_CHARS?' limit':n>MAX_CHARS*0.85?' warn':'');
-  sendBtn.disabled=n===0||isLoading;
+
+// ── Flow & suggestions ──────────────────────────────────────────
+function setFlow(f) { activeFlow=f; }
+
+function sendSuggestion(text, chip) {
+  if(isLoading)return;
+  if(sug)sug.style.display='none';
+  plan.reset();
+  docenteCtx.grado = '';
+  sessionChip = chip || '';
+  inp.value=text; autoResize(); updateChar(); handleSend();
 }
 
-// ── Fetch ─────────────────────────────────────────────────────────
-function buildHistoryPayload(){
-  return history.slice(-HISTORY_LIMIT).map(t=>({role:t.role,parts:[{text:t.parts[0].text.slice(0,800)}]}));
-}
-function isRetryable(err){ return err.name==='AbortError'||!!err.message?.startsWith('http_5'); }
-
-async function fetchWithRetry(message, attempt=0){
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),CLIENT_TMOUT);
-  try {
-    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history:buildHistoryPayload()}),signal:controller.signal});
-    clearTimeout(timeout);
-    if(res.status===429) throw Object.assign(new Error('rate_limit'),{fatal:true});
-    if(res.status>=400&&res.status<500) throw Object.assign(new Error(`http_${res.status}`),{fatal:true});
-    if(!res.ok) throw new Error(`http_${res.status}`);
-    const data=await res.json();
-    if(data.error) throw Object.assign(new Error(data.error),{fatal:true});
-    if(!data.reply) throw new Error('empty_response');
-    return data.reply;
-  } catch(err){
-    clearTimeout(timeout);
-    if(err.fatal) throw err;
-    if(!navigator.onLine) throw Object.assign(new Error('offline'),{fatal:true});
-    if(attempt<MAX_RETRY&&isRetryable(err)){
-      showToast(`Reintentando… (${attempt+1}/${MAX_RETRY})`);
-      await new Promise(r=>setTimeout(r,RETRY_BASE*Math.pow(2,attempt)));
-      return fetchWithRetry(message,attempt+1);
-    }
-    throw err;
-  }
+function handleSend() {
+  const text=inp.value.trim();
+  if(!text||isLoading)return;
+  inp.value=''; autoResize(); updateChar();
+  sendMessage(text);
 }
 
-async function sendMessage(text){
-  if(!text.trim()||isLoading) return;
-  isLoading=true; sendBtn.disabled=true; setChipsDisabled(true);
-  appendMessage(text,'user'); showTyping();
-  // FIX #14: inferir chip si el usuario escribió directo
-  if(!sessionChip) sessionChip=inferChip(text);
-  const pendingTurn={role:'user',parts:[{text}]};
-  try {
-    const reply=await fetchWithRetry(text);
-    hideTyping(); appendMessage(reply,'bot');
-    history.push(pendingTurn); history.push({role:'model',parts:[{text:reply}]});
-    if(history.length>HISTORY_LIMIT*2) history=history.slice(-HISTORY_LIMIT*2);
-    messageCount++;
-    // FIX #2: verificar TTL antes de mostrar
-    if(messageCount>=SURVEY_THRESHOLD && !isSurveyRecentlyDone())
-      $('surveyFloatBtn').classList.add('visible');
-  } catch(err){
-    hideTyping();
-    const msgs={rate_limit:'Muchas consultas seguidas. Esperá un minuto.',offline:'Sin conexión. Revisá tu red.'};
-    appendMessage(msgs[err.message]||(err.name==='AbortError'?'Tardé demasiado. Intentá de nuevo.':err.message.length<120?err.message:'Problema técnico. Intentá de nuevo.'),'bot');
-  } finally {
-    isLoading=false; sendBtn.disabled=inputEl.value.trim().length===0;
-    setChipsDisabled(false); focusInput();
-  }
-}
-
-function sendSuggestion(text, chip){
-  if(isLoading) return;
-  sessionChip=chip||'';
-  if(suggestEl) suggestEl.style.display='none';
-  inputEl.value=text; autoResize(); updateCharCount(); handleSend();
-}
-function handleSend(){
-  const text=inputEl.value.trim();
-  if(!text||isLoading) return;
-  inputEl.value=''; autoResize(); updateCharCount(); sendMessage(text);
-}
-// FIX #8: resetChat resetea estado de encuesta correctamente
-function resetChat(){
-  if(isLoading) return;
-  history=[]; messageCount=0; sessionChip='';
+// ── Reset ───────────────────────────────────────────────────────
+function resetChat() {
+  if(isLoading)return;
+  history=[]; activeFlow='general'; plan.reset(); docenteCtx={nombre:'',grado:''};
+  surveyShown=false; sessionChip='';
+  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  $('surveyFloatBtn').style.display='';
   $('surveyFloatBtn').classList.remove('visible');
-  messagesEl.querySelectorAll('.msg-row').forEach((r,i)=>{ if(i>0) r.remove(); });
-  if(suggestEl) suggestEl.style.display='flex';
-  inputEl.value=''; autoResize(); updateCharCount();
+  messageCount=0; $('resumeBtn').classList.remove('visible');
+  msg.querySelectorAll('.msg-row').forEach((r,i)=>{if(i>0)r.remove();});
+  if(sug)sug.style.display='flex';
+  inp.value=''; autoResize(); updateChar();
   showToast('Nueva consulta iniciada.');
 }
-// ── Triple tap en logo → campo PIN admin ─────────────────────────
-let _tapCount = 0, _tapTimer = null;
-function logoTap() {
-  _tapCount++;
-  clearTimeout(_tapTimer);
-  _tapTimer = setTimeout(() => { _tapCount = 0; }, 600);
-  if (_tapCount >= 3) {
-    _tapCount = 0;
-    const wrap = $('adminPinWrap');
-    const isVisible = wrap.style.display !== 'none';
-    wrap.style.display = isVisible ? 'none' : 'block';
-    $('pinBtn').textContent = isVisible ? 'Entrar como familiar 🐾' : 'Ingresar →';
-    $('adminPinErr').textContent = '';
-    if (!isVisible) {
-      setTimeout(() => $('adminPinInput').focus(), 80);
-    }
+
+// ── Onboarding ──────────────────────────────────────────────────
+const OB_STORAGE_KEY = 'clara_ob_done_v1';
+const OB_SLIDES = [
+  {
+    icon: '📝',
+    title: 'Planificá en minutos',
+    text:  'Contame el grado, área y contenido. Clara te arma la planificación completa con actividades concretas, listas para usar en el aula.',
+  },
+  {
+    icon: '📅',
+    title: 'Plan Anual completo',
+    text:  'Tres períodos, contenidos organizados según el DC de Córdoba. Todo descargable en Word o PDF para presentar cuando quieras.',
+  },
+  {
+    icon: '🤝',
+    title: 'Adaptaciones e informes',
+    text:  'Adaptaciones curriculares con enfoque DUA, boletines de evaluación y más. Todo personalizado para tu grupo y descargable al instante.',
+  },
+];
+let obStep = 0;
+
+function showOnboarding() {
+  // Solo la primera vez por dispositivo
+  try { if (localStorage.getItem(OB_STORAGE_KEY)) return; } catch {}
+  obStep = 0;
+  renderObSlide();
+  $('onboardingOverlay').classList.add('visible');
+}
+
+function renderObSlide() {
+  const s = OB_SLIDES[obStep];
+  $('obIcon').textContent  = s.icon;
+  $('obTitle').textContent = s.title;
+  $('obText').textContent  = s.text;
+  $('obNextBtn').textContent = obStep < OB_SLIDES.length - 1 ? 'Siguiente →' : '¡Empezar! 🎉';
+  OB_SLIDES.forEach((_, i) => {
+    const dot = $('obDot' + i);
+    if (dot) dot.classList.toggle('active', i === obStep);
+  });
+}
+
+function obNext() {
+  if (obStep < OB_SLIDES.length - 1) {
+    obStep++;
+    renderObSlide();
+  } else {
+    closeOnboarding();
   }
 }
 
-// ── submitPin: bifurca a chat o dashboard ────────────────────────
-async function submitPin() {
-  const adminWrap = $('adminPinWrap');
-  const isAdminMode = adminWrap.style.display !== 'none';
+function closeOnboarding() {
+  $('onboardingOverlay').classList.remove('visible');
+  try { localStorage.setItem(OB_STORAGE_KEY, '1'); } catch {}
+}
 
-  if (!isAdminMode) {
-    // Acceso familiar normal
-    $('pinScreen').style.display = 'none';
-    $('mainPage').style.display  = 'flex';
-    try { if (!localStorage.getItem(OB_KEY)) showOnboarding(); else focusInput(); }
-    catch { showOnboarding(); }
-    return;
-  }
-
-  // Modo admin — validar PIN contra Worker
-  const pin = $('adminPinInput').value.trim().toUpperCase();
-  if (!pin) { $('adminPinErr').textContent = 'Ingresá el código.'; return; }
-
-  const btn = $('pinBtn');
-  btn.disabled = true;
-  btn.textContent = '…';
-  $('adminPinErr').textContent = '';
-
+// ── Historial localStorage ──────────────────────────────────────
+function saveSession() {
+  if (!sessionPin) return;
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      // No guardar el PIN — el key ya es por dispositivo
+      history:     history.slice(-HISTORY_LIMIT),
+      activeFlow,
+      docenteCtx,
+      sessionChip,
+      messageCount,
+      surveyShown,
+      savedAt:     Date.now(),
+    }));
+  } catch { /* storage lleno o bloqueado — ignorar silenciosamente */ }
+}
+
+function restoreSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    // Sesión válida si tiene menos de 12hs — sin validación de PIN (key ya es por dispositivo)
+    if ((Date.now() - s.savedAt) > 12 * 60 * 60 * 1000) {
+      localStorage.removeItem(STORAGE_KEY);
+      return false;
+    }
+    history      = Array.isArray(s.history) ? s.history : [];
+    activeFlow   = s.activeFlow  || 'general';
+    docenteCtx   = s.docenteCtx  || { nombre: '', grado: '' };
+    sessionChip  = s.sessionChip || '';
+    messageCount = s.messageCount || 0;
+    surveyShown  = s.surveyShown  || false;
+    return history.length > 0;
+  } catch { return false; }
+}
+
+function renderRestoredHistory() {
+  if (!history.length) return;
+  if (sug) sug.style.display = 'none';
+  history.forEach(t => {
+    const role = t.role === 'user' ? 'user' : 'bot';
+    appendMessageSafe(t.parts[0].text, role); // noSideEffects=true ya está en appendMessageSafe
+  });
+  updateResumeBtn();
+  showToast('✨ Continuando tu última sesión', 3000);
+}
+
+// ── PIN ─────────────────────────────────────────────────────────
+async function submitPin() {
+  const pinInput=$('pinInput'), pinError=$('pinError'), pinBtn=$('pinBtn');
+  const pin=pinInput.value.trim().toUpperCase();
+  if(!pin||pin.length<4){pinError.textContent='Ingresá un código válido.';pinInput.focus();return;}
+
+  // Validar contra el Worker — él conoce tanto los PINes de docentes como el del municipio
+  pinBtn.disabled=true; pinBtn.textContent='Verificando…';
+  pinError.textContent='';
+  try {
     const res = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ _ping: true, pin }),
-      signal: controller.signal,
     });
-    clearTimeout(timer);
-    const data = await res.json();
-    if (data.ok && data.role === 'dashboard') {
-      dashPin = pin;
-      $('pinScreen').style.display = 'none';
+    const data = await res.json().catch(()=>({}));
+
+    if (!res.ok || !data.ok) {
+      pinError.textContent = data.error || 'Código incorrecto. Revisá e intentá de nuevo.';
+      pinInput.focus();
+      return;
+    }
+
+    if (data.role === 'dashboard') {
+      // PIN del municipio → dashboard de métricas
+      dashboardPin = pin;
+      $('pinScreen').style.display='none';
       showDashboard();
     } else {
-      $('adminPinErr').textContent = data.error || 'Código incorrecto.';
-      btn.disabled = false;
-      btn.textContent = 'Ingresar →';
+      // PIN de docente → chat normal
+      sessionPin=pin;
+      $('pinScreen').style.display='none';
+      $('mainPage').style.display='flex';
+      if (restoreSession()) {
+        renderRestoredHistory();
+      } else {
+        showOnboarding();
+      }
+      focusInput();
     }
-  } catch(e) {
-    $('adminPinErr').textContent = e.name === 'AbortError'
-      ? 'Tiempo agotado. Intentá de nuevo.'
-      : 'Error de conexión.';
-    btn.disabled = false;
-    btn.textContent = 'Ingresar →';
+  } catch {
+    pinError.textContent = 'Sin conexión. Revisá tu internet e intentá de nuevo.';
+  } finally {
+    pinBtn.disabled=false; pinBtn.textContent='Ingresar';
   }
 }
+$('pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitPin();});
+$('pinInput').addEventListener('focus',function(){this.style.borderColor='var(--orange)';});
+$('pinInput').addEventListener('blur',function(){this.style.borderColor='var(--border)';});
 
-// ── Dashboard inline ─────────────────────────────────────────────
-let dashPin = '';
-let dashRows = [];
+// ── Modal keyboard close ─────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+$('surveyModal').addEventListener('click',e=>{if(e.target===$('surveyModal'))closeModal();});
 
+// ── Event listeners ─────────────────────────────────────────────
+btn.addEventListener('click',handleSend);
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleSend();}});
+inp.addEventListener('input',()=>{autoResize();updateChar();});
+inp.addEventListener('focus',()=>{
+  document.querySelector('meta[name=viewport]')
+    .setAttribute('content','width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
+});
+window.addEventListener('online', ()=>setStatus(true));
+window.addEventListener('offline',()=>setStatus(false));
+setStatus(navigator.onLine);
+
+// Solo hacer foco en desktop — en mobile el teclado no debe abrirse solo
+function focusInput() {
+  if (window.innerWidth > 900) inp.focus();
+}
 function showDashboard() {
-  // Crear panel si no existe
-  if (!$('dashboardInline')) buildDashboardDOM();
-  $('dashboardInline').style.display = 'flex';
-  document.body.style.overflow = 'auto';
+  $('dashboardPage').style.display = 'block';
+  document.body.style.overflow = 'auto'; // liberar scroll del body para el dashboard
   dLoadData();
 }
 
 function dExit() {
-  dashPin = ''; dashRows = [];
-  if ($('dashboardInline')) $('dashboardInline').style.display = 'none';
-  document.body.style.overflow = 'hidden';
-  // Volver al pinScreen limpio
+  $('dashboardPage').style.display = 'none';
+  document.body.style.overflow = 'hidden'; // restaurar overflow al salir
   $('pinScreen').style.display = 'flex';
-  $('adminPinWrap').style.display = 'none';
-  $('adminPinInput').value = '';
-  $('adminPinErr').textContent = '';
-  $('pinBtn').disabled = false;
-  $('pinBtn').textContent = 'Entrar como familiar 🐾';
+  $('pinInput').value = '';
+  $('pinError').textContent = '';
 }
 
-function buildDashboardDOM() {
-  const el = document.createElement('div');
-  el.id = 'dashboardInline';
-  el.style.cssText = 'display:none;position:fixed;inset:0;z-index:500;background:#0B0E0B;overflow-y:auto;flex-direction:column;';
-  el.innerHTML = `
-<style>
-  #dashboardInline { font-family:'DM Sans',system-ui,sans-serif; color:#E8F5E9; }
-  .di-wrap { max-width:1100px; margin:0 auto; padding:28px 20px 80px; }
-  .di-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; gap:12px; flex-wrap:wrap; }
-  .di-logo { display:flex; align-items:center; gap:12px; }
-  .di-badge { width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#2E7D32,#66BB6A); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-  .di-logo h1 { font-family:'Fraunces',Georgia,serif; font-size:1.2rem; font-weight:800; }
-  .di-logo p { font-size:10px; color:rgba(200,230,200,0.35); margin-top:2px; text-transform:uppercase; letter-spacing:0.08em; }
-  .di-actions { display:flex; gap:8px; flex-wrap:wrap; }
-  .di-btn { padding:7px 14px; border-radius:10px; font-size:12px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.15s; border:1px solid rgba(100,200,100,0.2); background:#161C16; color:rgba(200,230,200,0.6); display:flex; align-items:center; gap:5px; }
-  .di-btn:hover { border-color:#66BB6A; color:#A5D6A7; }
-  .di-btn-csv { background:rgba(46,125,50,0.15); border-color:rgba(46,125,50,0.3); color:#A5D6A7; }
-  .di-btn-csv:disabled { opacity:0.3; cursor:not-allowed; }
-  .di-btn-exit { border-color:rgba(185,28,28,0.2); }
-  .di-btn-exit:hover { border-color:#B91C1C; color:#FCA5A5; }
-  .di-btn.loading .di-ri { display:inline-block; animation:dispin 0.7s linear infinite; }
-  @keyframes dispin { to { transform:rotate(360deg); } }
-  .di-last { font-size:11px; color:rgba(200,230,200,0.3); }
-  .di-err { background:rgba(185,28,28,0.12); border:1px solid rgba(185,28,28,0.3); border-radius:12px; padding:10px 14px; font-size:12px; color:#FCA5A5; margin-bottom:16px; display:none; }
-  .di-err.show { display:block; }
-  .di-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
-  .di-kpi { background:#131813; border:1px solid rgba(100,200,100,0.1); border-radius:16px; padding:18px 16px; position:relative; overflow:hidden; }
-  .di-kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--da,#2E7D32); }
-  .di-kpi-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(200,230,200,0.35); margin-bottom:6px; }
-  .di-kpi-val { font-family:'Fraunces',Georgia,serif; font-size:2rem; font-weight:800; line-height:1; margin-bottom:4px; }
-  .di-kpi-sub { font-size:10px; color:rgba(200,230,200,0.35); }
-  .di-kpi-ico { position:absolute; top:14px; right:14px; font-size:18px; opacity:0.15; }
-  .di-row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-  .di-card { background:#131813; border:1px solid rgba(100,200,100,0.1); border-radius:16px; padding:20px; }
-  .di-card-t { font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(200,230,200,0.35); margin-bottom:14px; }
-  .di-bar-list { display:flex; flex-direction:column; gap:8px; }
-  .di-bar-row { display:flex; align-items:center; gap:8px; }
-  .di-bar-lbl { font-size:10px; color:rgba(200,230,200,0.5); width:80px; min-width:0; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .di-bar-track { flex:1; height:6px; background:#1A231A; border-radius:3px; overflow:hidden; }
-  .di-bar-fill { height:100%; border-radius:3px; transition:width 0.6s cubic-bezier(0.16,1,0.3,1); }
-  .di-bar-n { font-size:10px; color:rgba(200,230,200,0.3); min-width:18px; text-align:right; }
-  .di-tl-bars { display:flex; align-items:flex-end; gap:3px; height:60px; }
-  .di-tl-bar { flex:1; background:#2E7D32; border-radius:2px 2px 0 0; min-height:2px; transition:height 0.5s; }
-  .di-tl-bar:hover { filter:brightness(1.4); }
-  .di-tl-lbls { display:flex; gap:3px; margin-top:4px; }
-  .di-tl-lbl { flex:1; font-size:8px; color:rgba(200,230,200,0.25); text-align:center; overflow:hidden; }
-  .di-stars { display:flex; flex-direction:column; gap:6px; }
-  .di-sr { display:flex; align-items:center; gap:7px; }
-  .di-sl { font-size:10px; min-width:48px; }
-  .di-sl.sat { color:#A5D6A7; } .di-sl.fac { color:#80DEEA; }
-  .di-st { flex:1; height:6px; background:#1A231A; border-radius:3px; overflow:hidden; }
-  .di-sf-sat { height:100%; border-radius:3px; background:linear-gradient(90deg,#2E7D32,#66BB6A); transition:width 0.6s cubic-bezier(0.16,1,0.3,1); }
-  .di-sf-fac { height:100%; border-radius:3px; background:linear-gradient(90deg,#0097A7,#80DEEA); transition:width 0.6s cubic-bezier(0.16,1,0.3,1); }
-  .di-sp { font-size:10px; color:rgba(200,230,200,0.3); min-width:28px; text-align:right; }
-  .di-donut-wrap { display:flex; align-items:center; gap:16px; }
-  .di-legend { display:flex; flex-direction:column; gap:6px; flex:1; min-width:0; }
-  .di-li { display:flex; align-items:center; gap:6px; font-size:10px; color:rgba(200,230,200,0.5); }
-  .di-ld { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
-  .di-lv { font-size:9px; color:rgba(200,230,200,0.3); margin-left:auto; padding-left:4px; white-space:nowrap; }
-  .di-table-wrap { overflow-x:auto; }
-  .di-table { width:100%; border-collapse:collapse; font-size:10px; }
-  .di-table thead th { font-size:9px; text-transform:uppercase; letter-spacing:0.07em; color:rgba(200,230,200,0.3); padding:6px 8px; text-align:left; border-bottom:1px solid rgba(100,200,100,0.08); white-space:nowrap; }
-  .di-table tbody td { padding:8px 8px; border-bottom:1px solid rgba(100,200,100,0.06); color:rgba(200,230,200,0.5); }
-  .di-table tbody tr:hover td { background:#1A231A; }
-  .di-pill { display:inline-block; padding:1px 6px; border-radius:20px; font-size:9px; font-weight:600; }
-  .di-pg { background:rgba(46,125,50,0.15); color:#A5D6A7; border:1px solid rgba(46,125,50,0.2); }
-  .di-pa { background:rgba(232,168,48,0.15); color:#FFD54F; border:1px solid rgba(232,168,48,0.2); }
-  .di-pr { background:rgba(185,28,28,0.15); color:#FCA5A5; border:1px solid rgba(185,28,28,0.2); }
-  .di-empty { text-align:center; padding:24px 12px; }
-  .di-ei { font-size:24px; margin-bottom:6px; opacity:0.25; }
-  .di-et { font-size:10px; color:rgba(200,230,200,0.3); }
-  @media(max-width:700px){
-    .di-kpis { grid-template-columns:repeat(2,1fr); }
-    .di-row2 { grid-template-columns:1fr; }
-    .di-col-h,.di-col-m { display:none; }
-  }
-</style>
-<div class="di-wrap">
-  <div class="di-top">
-    <div class="di-logo">
-      <div class="di-badge">🐾</div>
-      <div><h1>Panel · Bizcochuela</h1><p>Aula Clara — Municipio</p></div>
-    </div>
-    <div class="di-actions">
-      <span class="di-last" id="diLast">Cargando…</span>
-      <button class="di-btn di-btn-csv" id="diCsvBtn" onclick="exportCSV()" disabled>↓ CSV</button>
-      <button class="di-btn" id="diRefBtn" onclick="dLoadData()"><span class="di-ri">↺</span> Actualizar</button>
-      <button class="di-btn di-btn-exit" onclick="dExit()">✕ Salir</button>
-    </div>
-  </div>
-  <div class="di-err" id="diErr"></div>
-  <div class="di-kpis">
-    <div class="di-kpi" style="--da:#2E7D32"><div class="di-kpi-ico">📋</div><div class="di-kpi-lbl">Encuestas</div><div class="di-kpi-val" id="dKpiTotal">—</div><div class="di-kpi-sub" id="dKpiTotalSub">Sin datos</div></div>
-    <div class="di-kpi" style="--da:#66BB6A"><div class="di-kpi-ico">⭐</div><div class="di-kpi-lbl">Satisfacción prom.</div><div class="di-kpi-val" id="dKpiSat">—</div><div class="di-kpi-sub" id="dKpiSatSub">Escala 1–5</div></div>
-    <div class="di-kpi" style="--da:#0097A7"><div class="di-kpi-ico">🖱️</div><div class="di-kpi-lbl">Facilidad prom.</div><div class="di-kpi-val" id="dKpiFac">—</div><div class="di-kpi-sub" id="dKpiFacSub">Escala 1–5</div></div>
-    <div class="di-kpi" style="--da:#A5D6A7"><div class="di-kpi-ico">✅</div><div class="di-kpi-lbl">Resolvió consulta</div><div class="di-kpi-val" id="dKpiEncontro">—</div><div class="di-kpi-sub" id="dKpiEncontroSub">Sí o más o menos</div></div>
-  </div>
-  <div class="di-row2">
-    <div class="di-card"><div class="di-card-t">Satisfacción y facilidad</div><div class="di-stars" id="dStars"><div class="di-empty"><div class="di-ei">⭐</div><div class="di-et">Sin datos</div></div></div></div>
-    <div class="di-card"><div class="di-card-t">¿Encontraron lo que buscaban?</div><div class="di-donut-wrap" id="dEncontro"><div class="di-empty"><div class="di-ei">🍩</div><div class="di-et">Sin datos</div></div></div></div>
-  </div>
-  <div class="di-row2">
-    <div class="di-card"><div class="di-card-t">Consultas frecuentes</div><div class="di-bar-list" id="dChips"><div class="di-empty"><div class="di-ei">📊</div><div class="di-et">Sin datos</div></div></div></div>
-    <div class="di-card"><div class="di-card-t">Actividad últimos 14 días</div><div class="di-tl-bars" id="dTlBars"></div><div class="di-tl-lbls" id="dTlLbls"></div></div>
-  </div>
-  <div class="di-card" style="margin-top:12px;">
-    <div class="di-card-t">Últimas 30 respuestas</div>
-    <div class="di-table-wrap">
-      <table class="di-table">
-        <thead><tr><th>Fecha</th><th class="di-col-h">Hora</th><th class="di-col-m">Municipio</th><th>Consulta</th><th>Satisf.</th><th>Facilidad</th><th>¿Encontró?</th></tr></thead>
-        <tbody id="dTableBody"><tr><td colspan="7" style="text-align:center;padding:24px;color:rgba(200,230,200,0.25)">Cargando…</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-</div>`;
-  document.body.appendChild(el);
-  dRenderTimeline([]); // init timeline vacío
-}
-
-// ── Helpers dashboard ────────────────────────────────────────────
 function dSet(id, val, sub) {
-  const el = $(id); if (!el) return;
-  el.textContent = val ?? '—';
-  const s = $(id+'Sub'); if (s && sub !== undefined) s.textContent = sub;
+  const e=$('d'+id), s=$('d'+id+'Sub');
+  if(e) e.textContent = val;
+  if(s) s.textContent = sub;
 }
+
 function dErr(msg) {
-  const el = $('diErr'); if (!el) return;
-  el.textContent = msg; el.classList.toggle('show', !!msg);
+  const el = $('dErr');
+  el.textContent = msg;
+  el.classList.toggle('show', !!msg);
 }
-function dEsc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function dStars(n) { return '★'.repeat(Math.min(5,Math.max(0,Number(n)||0))); }
-function diEmpty(icon) { return `<div class="di-empty"><div class="di-ei">${icon}</div><div class="di-et">Sin datos aún</div></div>`; }
+
+function dEsc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function dEmpty(icon) {
+  return `<div class="d-empty"><div class="d-empty-icon">${icon}</div><div class="d-empty-text">Sin datos aún</div></div>`;
+}
 
 async function dLoadData() {
-  const refBtn = $('diRefBtn'); if (refBtn) refBtn.classList.add('loading');
+  const btn = $('dRefreshBtn');
+  btn.classList.add('loading');
   dErr('');
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 18000);
   try {
     const res = await fetch(WORKER_URL, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ _dashboard:true, pin:dashPin }),
-      signal: controller.signal,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ _dashboard: true, pin: dashboardPin }),
     });
-    clearTimeout(timer);
-    const data = await res.json();
-    if (!data.ok) { dErr(data.error || 'Error al cargar datos.'); return; }
-    dashRows = Array.isArray(data.rows) ? data.rows : [];
-    dRenderAll(dashRows, data);
-    const last = $('diLast'); if (last) last.textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-    const csvBtn = $('diCsvBtn'); if (csvBtn) csvBtn.disabled = dashRows.length === 0;
+    // Intentar leer el body siempre — el Worker devuelve JSON incluso en error
+    let data;
+    try { data = await res.json(); } catch { throw new Error('Respuesta inválida del servidor (HTTP ' + res.status + ')'); }
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || 'Error del servidor (HTTP ' + res.status + ')');
+    }
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    dRenderAll(rows, data);
+    $('dLastUpdate').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
   } catch(e) {
-    clearTimeout(timer);
-    dErr('⚠️ ' + (e.name==='AbortError' ? 'Tiempo agotado. Intentá de nuevo.' : e.message || 'Error de conexión.'));
-    const last = $('diLast'); if (last) last.textContent = 'Error';
+    // Distinguir error de red de error de configuración
+    const msg = e.message === 'Failed to fetch'
+      ? 'Sin conexión al servidor. Verificá tu internet.'
+      : e.message;
+    dErr('⚠️ ' + msg);
+    $('dLastUpdate').textContent = 'Error';
   } finally {
-    if (refBtn) refBtn.classList.remove('loading');
+    btn.classList.remove('loading');
   }
 }
 
 function dRenderAll(rows, data) {
   dRenderKPI(rows, data);
-  dRenderStars(rows);
-  dRenderEncontro(rows);
   dRenderChips(rows);
+  dRenderUso(rows);
+  dRenderStars(rows);
   dRenderTimeline(rows);
   dRenderTable(rows);
 }
 
 function dRenderKPI(rows, data) {
   const total = rows.length || data.total || 0;
-  dSet('dKpiTotal', total, total + ' encuesta'+(total!==1?'s':''));
-  const sats = rows.map(r=>Number(r[4])).filter(n=>n>=1&&n<=5);
-  const satAvg = sats.length ? (sats.reduce((a,b)=>a+b,0)/sats.length).toFixed(1) : (data.satisfaccion_promedio||null);
-  dSet('dKpiSat', satAvg ? satAvg+' / 5' : '—', sats.length ? sats.length+' votos' : 'Sin datos');
-  const facs = rows.map(r=>Number(r[5])).filter(n=>n>=1&&n<=5);
-  const facAvg = facs.length ? (facs.reduce((a,b)=>a+b,0)/facs.length).toFixed(1) : (data.facilidad_promedio||null);
-  dSet('dKpiFac', facAvg ? facAvg+' / 5' : '—', facs.length ? facs.length+' votos' : 'Sin datos');
-  const si = rows.filter(r=>String(r[6])==='Sí, encontré lo que buscaba').length;
-  const parcial = rows.filter(r=>String(r[6])==='Más o menos').length;
-  const pct = total ? Math.round((si+parcial)/total*100) : 0;
-  dSet('dKpiEncontro', total ? pct+'%' : '—', `${si} sí · ${parcial} parcial`);
-}
+  dSet('KpiTotal', total, total + ' encuesta' + (total!==1?'s':'') + ' registrada' + (total!==1?'s':''));
 
-function dRenderStars(rows) {
-  const satC={5:0,4:0,3:0,2:0,1:0}, facC={5:0,4:0,3:0,2:0,1:0};
-  rows.forEach(r=>{ const s=Number(r[4]); if(s>=1&&s<=5) satC[s]++; const f=Number(r[5]); if(f>=1&&f<=5) facC[f]++; });
-  const satT=Object.values(satC).reduce((a,b)=>a+b,0), facT=Object.values(facC).reduce((a,b)=>a+b,0);
-  const el=$('dStars'); if(!el) return;
-  if(!satT&&!facT){ el.innerHTML=diEmpty('⭐'); return; }
-  const satMax=Math.max(...Object.values(satC),1), facMax=Math.max(...Object.values(facC),1);
-  el.innerHTML=[5,4,3,2,1].map(n=>{
-    const sv=satC[n], sp=satT?Math.round(sv/satT*100):0;
-    const fv=facC[n], fp=facT?Math.round(fv/facT*100):0;
-    return `<div class="di-sr"><div class="di-sl sat">${'★'.repeat(n)}</div><div class="di-st"><div class="di-sf-sat" style="width:${Math.round(sv/satMax*100)}%"></div></div><div class="di-sp">${sp}%</div></div>
-    <div class="di-sr" style="margin-bottom:3px"><div class="di-sl fac">${'☆'.repeat(n)}</div><div class="di-st"><div class="di-sf-fac" style="width:${Math.round(fv/facMax*100)}%"></div></div><div class="di-sp">${fp}%</div></div>`;
-  }).join('');
-}
+  const utils = rows.map(r=>Number(r[5])).filter(Boolean);
+  const avg = utils.length ? (utils.reduce((a,b)=>a+b,0)/utils.length).toFixed(1) : (data.utilidad_promedio||null);
+  dSet('KpiUtil', avg ? avg+' / 5' : '—', avg ? utils.length+' calificaciones' : 'Sin calificaciones');
 
-function dRenderEncontro(rows) {
-  const counts={'Sí, encontré lo que buscaba':0,'Más o menos':0,'No encontré lo que buscaba':0};
-  rows.forEach(r=>{ const v=String(r[6]||''); if(v in counts) counts[v]++; });
-  const total=Object.values(counts).reduce((a,b)=>a+b,0);
-  const el=$('dEncontro'); if(!el) return;
-  if(!total){ el.innerHTML=diEmpty('🍩'); return; }
-  const pal=[['#2E7D32'],['#F59E0B'],['#B91C1C']];
-  const entries=Object.entries(counts);
-  let cum=0;
-  const angles=entries.map(([,v])=>{ const a=v/total*360; const o={start:cum,end:cum+a}; cum+=a; return o; });
-  const R=46,r=28,cx=58,cy=58;
-  function arc(s,e){ const sr=(s-90)*Math.PI/180,er=(e-90)*Math.PI/180,ls=e-s>180?1:0; return `M${cx+R*Math.cos(sr)} ${cy+R*Math.sin(sr)} A${R} ${R} 0 ${ls} 1 ${cx+R*Math.cos(er)} ${cy+R*Math.sin(er)} L${cx+r*Math.cos(er)} ${cy+r*Math.sin(er)} A${r} ${r} 0 ${ls} 0 ${cx+r*Math.cos(sr)} ${cy+r*Math.sin(sr)} Z`; }
-  const paths=entries.map(([,v],i)=>{ if(!v)return ''; const{start,end}=angles[i]; return `<path d="${arc(start,end<start+0.5?start+0.5:end)}" fill="${pal[i][0]}" opacity="0.85"/>`; }).join('');
-  const resolvio=counts['Sí, encontré lo que buscaba']+counts['Más o menos'];
-  const pct=Math.round(resolvio/total*100);
-  const svg=`<svg width="116" height="116" viewBox="0 0 116 116" style="flex-shrink:0"><circle cx="${cx}" cy="${cy}" r="${R}" fill="#131813"/>${paths}<text x="${cx}" y="${cy}" text-anchor="middle" dy="0.35em" fill="#E8F5E9" font-family="Fraunces,serif" font-size="15" font-weight="800">${pct}%</text><text x="${cx}" y="${cy+12}" text-anchor="middle" fill="rgba(200,230,200,0.35)" font-family="DM Sans,sans-serif" font-size="7">resolvieron</text></svg>`;
-  const legend=entries.map(([lbl,v],i)=>`<div class="di-li"><div class="di-ld" style="background:${pal[i][0]}"></div><span>${lbl}</span><span class="di-lv">${v} (${Math.round(v/total*100)}%)</span></div>`).join('');
-  el.innerHTML=svg+`<div class="di-legend">${legend}</div>`;
+  const si = rows.filter(r=>String(r[7])==='Í, directo').length
+          || rows.filter(r=>String(r[7])==='Sí, directo').length;
+  const pct = total ? Math.round(si/total*100) : 0;
+  dSet('KpiSi', pct+'%', si+' de '+total+' respuestas');
+
+  const tMap = {'Menos de 15 min':0.2,'30 minutos':0.5,'1 hora':1,'Más de 2 horas':2};
+  let hs = 0;
+  rows.forEach(r=>{const t=tMap[String(r[6]||'')];if(t)hs+=t;});
+  dSet('KpiTiempo', hs>0?(hs>=100?Math.round(hs)+'hs':hs.toFixed(0)+'hs'):'—', hs>0?'estimado por encuestas':'Sin datos');
 }
 
 function dRenderChips(rows) {
-  const counts={}; rows.forEach(r=>{ const c=String(r[3]||'').trim()||'(sin chip)'; counts[c]=(counts[c]||0)+1; });
+  const counts={};
+  rows.forEach(r=>{const c=String(r[3]||'').trim()||'(sin chip)';counts[c]=(counts[c]||0)+1;});
   const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  const el=$('dChips'); if(!el) return;
-  if(!sorted.length){ el.innerHTML=diEmpty('📊'); return; }
   const max=sorted[0]?.[1]||1;
-  const colors=['#2E7D32','#66BB6A','#0097A7','#80DEEA','#7B6FD4','#F59E0B','#EF4444','#8FB55A'];
-  el.innerHTML=sorted.map(([lbl,n],i)=>`<div class="di-bar-row"><div class="di-bar-lbl" title="${dEsc(lbl)}">${dEsc(lbl)}</div><div class="di-bar-track"><div class="di-bar-fill" style="width:${Math.round(n/max*100)}%;background:${colors[i%colors.length]}"></div></div><div class="di-bar-n">${n}</div></div>`).join('');
+  const el=$('dChips');
+  if(!sorted.length){el.innerHTML=dEmpty('📊');return;}
+  const colors=['#E06820','#E8A830','#7DC45E','#F28C4E','#7B6FD4','#4E9BB5','#D46F7B','#8FB55A'];
+  el.innerHTML=sorted.map(([lbl,n],i)=>`
+    <div class="d-bar-row">
+      <div class="d-bar-lbl" title="${dEsc(lbl)}">${dEsc(lbl)}</div>
+      <div class="d-bar-track"><div class="d-bar-fill" style="width:${Math.round(n/max*100)}%;background:${colors[i%colors.length]}"></div></div>
+      <div class="d-bar-n">${n}</div>
+    </div>`).join('');
+}
+
+function dRenderUso(rows) {
+  const counts={'Sí, directo':0,'Lo adapté':0,'No me sirvió':0};
+  rows.forEach(r=>{const u=String(r[7]||'');if(u in counts)counts[u]++;});
+  const total=Object.values(counts).reduce((a,b)=>a+b,0);
+  const el=$('dUso');
+  if(!total){el.innerHTML=dEmpty('🍩');return;}
+  const pal=[['#5A9E40','#7DC45E'],['#E8A830','#F5C862'],['#B91C1C','#EF4444']];
+  const entries=Object.entries(counts);
+  let cum=0;
+  const angles=entries.map(([,v])=>{const a=v/total*360;const o={start:cum,end:cum+a};cum+=a;return o;});
+  const R=52,r=32,cx=66,cy=66;
+  function arc(s,e){
+    const sr=(s-90)*Math.PI/180,er=(e-90)*Math.PI/180,ls=e-s>180?1:0;
+    return `M${cx+R*Math.cos(sr)} ${cy+R*Math.sin(sr)} A${R} ${R} 0 ${ls} 1 ${cx+R*Math.cos(er)} ${cy+R*Math.sin(er)} L${cx+r*Math.cos(er)} ${cy+r*Math.sin(er)} A${r} ${r} 0 ${ls} 0 ${cx+r*Math.cos(sr)} ${cy+r*Math.sin(sr)} Z`;
+  }
+  const paths=entries.map(([lbl,v],i)=>{
+    if(!v)return'';
+    const{start,end}=angles[i];
+    return `<path d="${arc(start,end<start+0.5?start+0.5:end)}" fill="${pal[i][0]}" opacity="0.85"><title>${lbl}: ${v} (${Math.round(v/total*100)}%)</title></path>`;
+  }).join('');
+  const siPct=Math.round(counts['Sí, directo']/total*100);
+  const svg=`<svg width="132" height="132" viewBox="0 0 132 132"><circle cx="${cx}" cy="${cy}" r="${R}" fill="#1E1915"/>${paths}<text x="${cx}" y="${cy}" text-anchor="middle" dy="0.35em" fill="#F5ECD8" font-family="Fraunces,serif" font-size="17" font-weight="800">${siPct}%</text><text x="${cx}" y="${cy+14}" text-anchor="middle" fill="rgba(245,236,216,0.35)" font-family="DM Sans,sans-serif" font-size="8">directos</text></svg>`;
+  const legend=entries.map(([lbl,v],i)=>`<div class="d-legend-item"><div class="d-legend-dot" style="background:${pal[i][0]}"></div><span>${lbl}</span><span class="d-legend-val">${v} (${Math.round(v/total*100)}%)</span></div>`).join('');
+  el.innerHTML=svg+`<div class="d-legend">${legend}</div>`;
+}
+
+function dRenderStars(rows) {
+  const counts={5:0,4:0,3:0,2:0,1:0};
+  rows.forEach(r=>{const u=Number(r[5]);if(u>=1&&u<=5)counts[u]++;});
+  const total=Object.values(counts).reduce((a,b)=>a+b,0);
+  const el=$('dStars');
+  if(!total){el.innerHTML=dEmpty('⭐');return;}
+  const max=Math.max(...Object.values(counts))||1;
+  el.innerHTML=[5,4,3,2,1].map(n=>{
+    const v=counts[n],pct=Math.round(v/total*100);
+    return `<div class="d-star-row"><div class="d-star-lbl">${'★'.repeat(n)}</div><div class="d-star-track"><div class="d-star-fill" style="width:${Math.round(v/max*100)}%"></div></div><div class="d-star-pct">${pct}%</div></div>`;
+  }).join('');
 }
 
 function dRenderTimeline(rows) {
-  const days=14, now=new Date(), buckets={};
-  for(let i=0;i<days;i++){ const d=new Date(now); d.setDate(d.getDate()-(days-1-i)); buckets[d.toLocaleDateString('es-AR')]=0; }
-  rows.forEach(r=>{ const k=String(r[0]||''); if(k in buckets) buckets[k]++; });
-  const vals=Object.values(buckets), maxV=Math.max(...vals,1), keys=Object.keys(buckets);
-  const barsEl=$('dTlBars'), lblsEl=$('dTlLbls'); if(!barsEl) return;
-  barsEl.innerHTML=vals.map((v,i)=>`<div class="di-tl-bar" style="height:${Math.max(2,Math.round(v/maxV*56))}px;opacity:${(0.35+0.65*v/maxV).toFixed(2)}" title="${keys[i]}: ${v}"></div>`).join('');
-  lblsEl.innerHTML=keys.map((k,i)=>{ const p=k.split('/'),show=(i%3===0||i===keys.length-1)?p[0]+'/'+p[1]:''; return `<div class="di-tl-lbl">${show}</div>`; }).join('');
+  const days=14,now=new Date(),buckets={};
+  for(let i=0;i<days;i++){const d=new Date(now);d.setDate(d.getDate()-(days-1-i));buckets[d.toLocaleDateString('es-AR')]=0;}
+  rows.forEach(r=>{const k=String(r[0]||'');if(k in buckets)buckets[k]++;});
+  const vals=Object.values(buckets),maxV=Math.max(...vals,1),keys=Object.keys(buckets);
+  $('dTlBars').innerHTML=vals.map((v,i)=>`<div class="d-tl-bar" style="height:${Math.max(3,Math.round(v/maxV*68))}px;opacity:${(0.4+0.6*v/maxV).toFixed(2)}" title="${keys[i]}: ${v}"></div>`).join('');
+  $('dTlLabels').innerHTML=keys.map((k,i)=>{const p=k.split('/'),show=(i%3===0||i===keys.length-1)?p[0]+'/'+p[1]:'';return `<div class="d-tl-lbl">${show}</div>`;}).join('');
 }
 
 function dRenderTable(rows) {
-  const tbody=$('dTableBody'); if(!tbody) return;
-  const recent=rows.slice(-30).reverse();
-  if(!recent.length){ tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:rgba(200,230,200,0.25)">Sin registros aún</td></tr>`; return; }
-  const cls={'Sí, encontré lo que buscaba':'di-pg','Más o menos':'di-pa','No encontré lo que buscaba':'di-pr'};
-  const short={'Sí, encontré lo que buscaba':'Sí','Más o menos':'Parcial','No encontré lo que buscaba':'No'};
-  tbody.innerHTML=recent.map(r=>`<tr><td>${dEsc(String(r[0]||''))}</td><td class="di-col-h">${dEsc(String(r[1]||''))}</td><td class="di-col-m">${dEsc(String(r[2]||''))}</td><td>${dEsc(String(r[3]||'—'))}</td><td style="color:#FFD54F;letter-spacing:-1px">${r[4]?dStars(r[4]):'—'}</td><td style="color:#FFD54F;letter-spacing:-1px">${r[5]?dStars(r[5]):'—'}</td><td>${r[6]?`<span class="di-pill ${cls[r[6]]||'di-pa'}">${dEsc(short[r[6]]||String(r[6]))}</span>`:'—'}</td></tr>`).join('');
+  const tbody=$('dTableBody');
+  const recent=rows.slice(-20).reverse();
+  if(!recent.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:28px;color:rgba(245,236,216,0.3)">Sin registros aún</td></tr>`;return;}
+  const pilCls={'Sí, directo':'d-pill-g','Lo adapté':'d-pill-a','No me sirvió':'d-pill-r'};
+  tbody.innerHTML=recent.map(r=>`<tr>
+    <td>${dEsc(String(r[0]||''))} ${dEsc(String(r[1]||''))}</td>
+    <td>${dEsc(String(r[3]||'—'))}</td>
+    <td>${r[5]?'★'.repeat(Math.min(5,Number(r[5]))):'—'}</td>
+    <td class="d-col-tiempo">${dEsc(String(r[6]||'—'))}</td>
+    <td>${r[7]?`<span class="d-pill ${pilCls[r[7]]||'d-pill-a'}">${dEsc(String(r[7]))}</span>`:'—'}</td>
+  </tr>`).join('');
 }
 
-function exportCSV() {
-  if (!dashRows.length) return;
-  const headers=['Fecha','Hora','Municipio','Chip','Satisfacción','Facilidad','Encontró','Session ID','Fecha ISO'];
-  const esc=v=>{ const s=String(v??''); return s.includes(',')||s.includes('"')||s.includes('\n')?`"${s.replace(/"/g,'""')}"`:s; };
-  const lines=[headers.join(','), ...dashRows.map(r=>r.map(esc).join(','))];
-  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`bizcochuela_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
-}
-
-sendBtn.addEventListener('click', handleSend);
-inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleSend();} });
-inputEl.addEventListener('input', ()=>{ autoResize(); updateCharCount(); });
-window.addEventListener('online',  ()=>setStatus(true));
-window.addEventListener('offline', ()=>setStatus(false));
-inputEl.addEventListener('focus', ()=>{
-  document.querySelector('meta[name=viewport]').setAttribute('content','width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-});
-setStatus(navigator.onLine);
+dRenderTimeline([]);
 </script>
 </body>
 </html>

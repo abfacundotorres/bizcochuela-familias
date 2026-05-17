@@ -344,12 +344,9 @@ const RETRY_BASE       = 1200;
 const CLIENT_TMOUT     = 33000;
 const HISTORY_LIMIT    = 12;
 const SURVEY_THRESHOLD = 5;
-const SURVEY_TTL_MS    = 7 * 24 * 60 * 60 * 1000; // 7 días
-
 // FIX #1: municipio desde URL param — municipio despliega ?m=JESUSMARIA
 const MUNICIPIO  = new URLSearchParams(location.search).get('m') || 'demo';
 const OB_KEY     = 'bizcochuela_ob_done_v1';
-const SURVEY_KEY = 'bizcochuela_survey_ts';
 
 const OB_SLIDES = [
   { icon:'🐾', title:'Hola, soy Bizcochuela',      text:'Soy una maestra cordobesa con 20 años de experiencia. Ahora ayudo a las familias a acompañar a sus hijos en la escuela primaria.' },
@@ -357,14 +354,10 @@ const OB_SLIDES = [
   { icon:'🆓', title:'Gratis, siempre',              text:'Bizcochuela es un servicio gratuito para las familias del municipio. Sin publicidad, sin datos personales. Solo ayuda.' },
 ];
 
-// FIX #2: surveyShown con TTL en localStorage
-function isSurveyRecentlyDone() {
-  try { const ts=parseInt(localStorage.getItem(SURVEY_KEY)||'0',10); return ts>0 && (Date.now()-ts)<SURVEY_TTL_MS; }
-  catch { return false; }
-}
-function markSurveyDone() {
-  try { localStorage.setItem(SURVEY_KEY, String(Date.now())); } catch {}
-}
+// Encuesta: solo en memoria de sesión — se resetea al cerrar/reabrir el chatbot
+let _surveyDoneThisSession = false;
+function isSurveyRecentlyDone() { return _surveyDoneThisSession; }
+function markSurveyDone()       { _surveyDoneThisSession = true; }
 
 // FIX #3: inferir chip desde texto libre
 function inferChip(text) {

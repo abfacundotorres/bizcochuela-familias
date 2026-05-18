@@ -454,6 +454,11 @@ function checkSurveyReady() {
   $('surveySubmitBtn').disabled = !(surveySat && surveyFac && surveyEncontro);
 }
 // FIX #15: spinner + fire-and-forget (no bloquea UX si falla la red)
+const ENCONTRO_LABEL = {
+  'si':      'Sí, encontré lo que buscaba',
+  'parcial': 'Más o menos',
+  'no':      'No encontré lo que buscaba',
+};
 function submitSurvey() {
   const btn = $('surveySubmitBtn');
   btn.disabled=true; btn.classList.add('loading');
@@ -462,10 +467,11 @@ function submitSurvey() {
     body: JSON.stringify({
       _survey:true, municipio:MUNICIPIO, chip:sessionChip,
       satisfaccion:surveySat, facilidad:surveyFac,
-      encontro:surveyEncontro, session_id:SESSION_ID,
+      encontro: ENCONTRO_LABEL[surveyEncontro] || surveyEncontro,
+      session_id:SESSION_ID,
     }),
   }).catch(()=>{});
-  markSurveyDone(); // FIX #2
+  markSurveyDone();
   $('surveyForm').style.display='none'; $('surveyThanks').style.display='block';
   setTimeout(closeSurvey, 2000);
 }
@@ -610,6 +616,7 @@ function handleSend(){
 function resetChat(){
   if(isLoading) return;
   history=[]; messageCount=0; sessionChip='';
+  _surveyDoneThisSession = false;
   $('surveyFloatBtn').classList.remove('visible');
   messagesEl.querySelectorAll('.msg-row').forEach((r,i)=>{ if(i>0) r.remove(); });
   if(suggestEl) suggestEl.style.display='flex';

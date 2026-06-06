@@ -454,20 +454,18 @@ function checkSurveyReady() {
   $('surveySubmitBtn').disabled = !(surveySat && surveyFac && surveyEncontro);
 }
 // FIX #15: spinner + fire-and-forget (no bloquea UX si falla la red)
-const ENCONTRO_LABEL = {
-  'si':      'Sí, encontré lo que buscaba',
-  'parcial': 'Más o menos',
-  'no':      'No encontré lo que buscaba',
-};
+// FIX B1/B2: el Worker valida códigos cortos ('si'|'parcial'|'no') y el AppScript
+// los convierte al label largo al guardar. Enviar el label largo hacía que el
+// Worker descartara TODAS las encuestas silenciosamente. Mandamos el código corto.
 function submitSurvey() {
   const btn = $('surveySubmitBtn');
   btn.disabled=true; btn.classList.add('loading');
   fetch(WORKER_URL, {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({
-      _survey:true, municipio:MUNICIPIO, chip:sessionChip,
+      _survey:true, municipio:MUNICIPIO, chip:(sessionChip || 'general'),
       satisfaccion:surveySat, facilidad:surveyFac,
-      encontro: ENCONTRO_LABEL[surveyEncontro] || surveyEncontro,
+      encontro: surveyEncontro,
       session_id:SESSION_ID,
     }),
   }).catch(()=>{});
